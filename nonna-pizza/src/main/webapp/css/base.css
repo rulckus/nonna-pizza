@@ -1,0 +1,138 @@
+/* ===== CORES (mude aqui e muda o site todo) ===== */
+:root {
+    --marrom-escuro: #2e1a12;
+    --vinho: #8b1e24;
+    --vinho-hover: #6f171c;
+    --dourado: #f0a830;
+    --ouro: #bf8a2c;
+    --laranja: #c97a1e;
+    --fundo: #f8f3ea;
+    --papel: #fcf9f3;
+    --bege: #efe5d4;
+    --bege-campo: #e8dcc4;
+    --borda: #e2d6c1;
+    --borda-ouro: #e3cf9f;
+    --texto: #2b1a12;
+    --texto-suave: #7a6a5c;
+}
+
+/* ===== BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* garante que o atributo hidden esconda mesmo com display definido no CSS */
+[hidden] {
+    display: none !important;
+}
+
+.container {
+    width: min(1100px, 100% - 40px);
+    margin-inline: auto;
+}
+
+/* ===== ÍCONES (SVG inline) ===== */
+.icone {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ===== BOTÕES ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 6px;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primario {
+    background: var(--vinho);
+    color: white;
+}
+
+.btn-primario:hover {
+    background: var(--vinho-hover);
+}
+
+.btn-secundario {
+    background: var(--bege-campo);
+    color: var(--texto-suave);
+    border: 1px solid var(--borda);
+    font-weight: 400;
+}
+
+.btn-grande {
+    padding: 13px 22px;
+    font-size: 14px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: var(--bege);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+/* ===== CAMPO DE BUSCA (cardápio e pedidos) ===== */
+.busca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 220px;
+    padding: 8px 12px;
+    background: var(--bege-campo);
+    border: 1px solid var(--borda-ouro);
+    border-radius: 8px;
+    color: var(--texto-suave);
+}
+
+.busca input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 12px;
+    color: var(--texto);
+}
+
+.busca input:focus {
+    outline: none;
+}
+
+.busca:focus-within {
+    outline: 2px solid var(--vinho);
+}

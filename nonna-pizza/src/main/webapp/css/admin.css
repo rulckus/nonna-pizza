@@ -1,35 +1,4 @@
-/* ===== CORES (mude aqui e muda o site todo) ===== */
-:root {
-    --marrom-escuro: #2e1a12;
-    --vinho: #8b1e24;
-    --vinho-hover: #6f171c;
-    --dourado: #f0a830;
-    --laranja: #c97a1e;
-    --fundo: #f8f3ea;
-    --bege: #efe5d4;
-    --bege-campo: #e8dcc4;
-    --borda: #e2d6c1;
-    --texto: #2b1a12;
-    --texto-suave: #7a6a5c;
-}
-
-/* ===== BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Inter", Arial, sans-serif;
-    background: var(--fundo);
-    color: var(--texto);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
+/* Painel do administrador (pizzaiolo). Usar junto com base.css */
 
 /* ===== LAYOUT: menu à esquerda + conteúdo ===== */
 .layout {
@@ -117,6 +86,7 @@ a {
 /* ===== CONTEÚDO ===== */
 .conteudo {
     flex: 1;
+    min-width: 0;
     padding: 25px;
 }
 
@@ -140,44 +110,9 @@ a {
     align-items: start;
 }
 
-.card {
-    background: var(--bege);
-    border: 1px solid var(--borda);
-    border-radius: 10px;
-}
-
-/* ===== BOTÕES ===== */
-.btn {
-    display: inline-block;
-    padding: 9px 18px;
-    border-radius: 6px;
-    border: none;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-primario {
-    background: var(--vinho);
-    color: white;
-}
-
-.btn-primario:hover {
-    background: var(--vinho-hover);
-}
-
-.btn-secundario {
-    background: var(--bege-campo);
-    color: var(--texto-suave);
-    border: 1px solid var(--borda);
-    font-weight: 400;
-}
-
 /* ===== TABELA ===== */
 .tabela-card {
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 table {
@@ -201,14 +136,12 @@ td {
     vertical-align: middle;
 }
 
-.pizza-icone {
-    width: 32px;
-    height: 32px;
+.pizza-img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: var(--marrom-escuro);
-    display: grid;
-    place-items: center;
-    font-size: 17px;
+    object-fit: cover; /* corta a foto sem achatar */
+    display: block;
 }
 
 .nome {
@@ -333,7 +266,188 @@ form textarea:focus {
     flex: 1;
 }
 
-/* ===== CELULAR: empilha tudo ===== */
+/* ===== PEDIDOS: tabela com busca e status ===== */
+.tabela-pedidos td {
+    font-size: 11px;
+}
+
+.tabela-pedidos .cliente,
+.tabela-pedidos .total {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tabela-pedidos th:last-child,
+.tabela-pedidos td:last-child {
+    text-align: center;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-recebido {
+    background: #fdf1c4;
+    color: #8a5a0a;
+}
+
+.status-preparando {
+    background: #dbe7fb;
+    color: #1d4ed8;
+}
+
+.status-assando {
+    background: #fde6d3;
+    color: #b45309;
+}
+
+.status-entregue {
+    background: #d6f5e6;
+    color: #047857;
+}
+
+/* ===== PRODUÇÃO: quadro por etapa =====
+   Cada coluna define as próprias cores pelas variáveis abaixo */
+.atualizado {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--bege-campo);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--texto-suave);
+}
+
+.quadro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+
+.coluna-recebido {
+    --tom: #faf0c8;
+    --cor: #8a4a0a;
+    --botao: #8a3e08;
+}
+
+.coluna-preparando {
+    --tom: #dbe7fb;
+    --cor: #1d4ed8;
+    --botao: #1d4ed8;
+}
+
+.coluna-assando {
+    --tom: #fde3cc;
+    --cor: #c2410c;
+    --botao: #8a3e08;
+}
+
+.coluna-pronto {
+    --tom: #d3f5e3;
+    --cor: #047857;
+    --botao: #0b7a5a;
+}
+
+.coluna-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--tom);
+    color: var(--cor);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.contador {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cor);
+    color: white;
+    font-size: 10px;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pedido-card {
+    padding: 10px 12px;
+    background: var(--bege);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.pedido-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pedido-hora {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--texto-suave);
+}
+
+.pedido-cliente {
+    margin: 4px 0 6px;
+    color: var(--texto-suave);
+}
+
+.pedido-itens {
+    list-style: none;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.pedido-itens li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+}
+
+.pedido-itens li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cor);
+}
+
+.btn-avancar {
+    width: 100%;
+    background: var(--botao);
+    color: white;
+}
+
+/* ===== TELAS MENORES ===== */
+@media (max-width: 760px) {
+    .quadro {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 800px) {
     .layout {
         flex-direction: column;
@@ -356,10 +470,13 @@ form textarea:focus {
     }
 }
 
-.pizza-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover; /* corta a foto sem achatar */
-    display: block;
+@media (max-width: 540px) {
+    .quadro {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* espaço abaixo da busca nas telas do admin */
+.conteudo .busca {
+    margin-bottom: 16px;
 }

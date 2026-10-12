@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nonna Pizza - Produção</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- ===== MENU LATERAL ===== -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Nonna Pizza</h1>
+            <span>Painel Admin</span>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">Cardápio</a>
+            <a href="pedidos.html">Pedidos</a>
+            <a href="producao.html" class="ativo">Produção</a>
+        </nav>
+
+        <div class="usuario">
+            <div class="avatar">A</div>
+            <div>
+                <strong>Admin</strong>
+                <a href="#">Sair</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="conteudo">
+
+        <header class="topo">
+            <h2>Produção — Cozinha</h2>
+            <p class="atualizado">
+                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Atualizado às 20:44
+            </p>
+        </header>
+
+        <div class="quadro">
+
+            <section class="coluna coluna-recebido">
+                <h3 class="coluna-topo">Recebido <span class="contador">2</span></h3>
+                <div class="lista">
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#1</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                20:41
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">Bruno M.</p>
+                        <ul class="pedido-itens">
+                            <li>2× Margherita</li>
+                            <li>1× Calabresa</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">→ Avançar</button>
+                    </article>
+
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#2</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                20:43
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">Camila S.</p>
+                        <ul class="pedido-itens">
+                            <li>1× Quatro Queijos</li>
+                            <li>1× Nutella</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">→ Avançar</button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="coluna coluna-preparando">
+                <h3 class="coluna-topo">Preparando <span class="contador">1</span></h3>
+                <div class="lista">
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#3</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                20:21
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">Rafael S.</p>
+                        <ul class="pedido-itens">
+                            <li>1× Rúcula e Parma</li>
+                            <li>1× Portuguesa</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">→ Avançar</button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="coluna coluna-assando">
+                <h3 class="coluna-topo">Assando <span class="contador">2</span></h3>
+                <div class="lista">
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#4</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                20:10
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">Lucia M.</p>
+                        <ul class="pedido-itens">
+                            <li>3× Margherita</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">→ Avançar</button>
+                    </article>
+
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#5</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                19:58
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">João L.</p>
+                        <ul class="pedido-itens">
+                            <li>1× Frango c/ Catupiry</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">→ Avançar</button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="coluna coluna-pronto">
+                <h3 class="coluna-topo">Pronto para entrega <span class="contador">1</span></h3>
+                <div class="lista">
+                    <article class="pedido-card">
+                        <div class="pedido-cabecalho">
+                            <span>#6</span>
+                            <span class="pedido-hora">
+                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                19:40
+                            </span>
+                        </div>
+                        <p class="pedido-cliente">Mariana C.</p>
+                        <ul class="pedido-itens">
+                            <li>2× Calabresa</li>
+                            <li>1× Refrigerante</li>
+                        </ul>
+                        <button type="button" class="btn btn-avancar">✓ Confirmar entrega</button>
+                    </article>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<script src="js/producao.js"></script>
+</body>
+</html>

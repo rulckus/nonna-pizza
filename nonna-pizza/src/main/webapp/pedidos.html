@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nonna Pizza - Gerenciar Pedidos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- ===== MENU LATERAL ===== -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Nonna Pizza</h1>
+            <span>Painel Admin</span>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">Cardápio</a>
+            <a href="pedidos.html" class="ativo">Pedidos</a>
+            <a href="producao.html">Produção</a>
+        </nav>
+
+        <div class="usuario">
+            <div class="avatar">A</div>
+            <div>
+                <strong>Admin</strong>
+                <a href="#">Sair</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="conteudo">
+
+        <header class="topo">
+            <h2>Gerenciar Pedidos</h2>
+        </header>
+
+        <label class="busca">
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="search" placeholder="Pesquisar pedido..." aria-label="Pesquisar pedido" data-filtro=".tabela-pedidos tbody tr">
+        </label>
+
+        <section class="card tabela-card">
+            <table class="tabela-pedidos">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Produtos</th>
+                    <th>Total</th>
+                    <th>Hora</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td class="cliente">Bruno M.</td>
+                    <td class="ingredientes">2× Margherita, 1× Refrigerante 2L</td>
+                    <td class="total">R$ 97,79</td>
+                    <td>19:42</td>
+                    <td><span class="status status-recebido">Recebido</span></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td class="cliente">Camila S.</td>
+                    <td class="ingredientes">1× Quatro Queijos, 1× Nutella</td>
+                    <td class="total">R$ 89,80</td>
+                    <td>19:38</td>
+                    <td><span class="status status-preparando">Preparando</span></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td class="cliente">Rafael S.</td>
+                    <td class="ingredientes">1× Calabresa, 1× Portuguesa</td>
+                    <td class="total">R$ 87,80</td>
+                    <td>19:35</td>
+                    <td><span class="status status-assando">Assando</span></td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td class="cliente">Lucia M.</td>
+                    <td class="ingredientes">3× Margherita</td>
+                    <td class="total">R$ 128,70</td>
+                    <td>19:20</td>
+                    <td><span class="status status-entregue">Entregue</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+</div>
+
+<script src="js/filtro.js"></script>
+</body>
+</html>

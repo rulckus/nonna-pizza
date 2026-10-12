@@ -1,18 +1,55 @@
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Nonna Pizza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
 <body>
-<h2>Cadastro</h2>
 
-<form action="/create-cliente" method="post">
+<main class="auth">
+    <section class="auth-visual">
+        <blockquote>
+            <p>"Cada pizza saída deste forno carrega o amor de gerações."</p>
+        </blockquote>
+    </section>
 
-    <label>Cadastro</label>
-    <input type="text" name="nome" id="nome">
-    <input type="text" name="email" id="email">
-    <input type="text" name="telefone" id="telefone">
-    <input type="text" name="senha" id="senha">
+    <section class="auth-painel">
+        <div class="auth-marca">
+            <span class="marca-selo" aria-hidden="true">N</span>
+            <strong>Nonna Pizza</strong>
+            <span>Bem-vindo</span>
+        </div>
 
-    <button type="submit">Register</button>
+        <form action="/create-cliente" method="post" class="auth-form">
+            <div>
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome" placeholder="Seu nome" autocomplete="name" required>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="voce@email.com" autocomplete="email" required>
+            </div>
+            <div>
+                <label for="telefone">Telefone</label>
+                <input type="tel" name="telefone" id="telefone" placeholder="(11) 99999-9999" autocomplete="tel" required>
+            </div>
+            <div>
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" placeholder="Crie uma senha" autocomplete="new-password" minlength="6" required>
+            </div>
 
-</form>
+            <button type="submit" class="btn btn-primario">Cadastrar</button>
+        </form>
+
+        <p class="auth-troca">Já tem uma conta? <a href="login.html">Faça login</a></p>
+    </section>
+</main>
 
 </body>
 </html>

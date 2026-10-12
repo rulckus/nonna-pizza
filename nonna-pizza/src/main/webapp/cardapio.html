@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Nonna Pizza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/cliente.css">
+</head>
+<body class="pagina-cliente">
+
+<header class="cabecalho">
+    <div class="container">
+        <a href="landing.html" class="marca">
+            <span class="marca-selo" aria-hidden="true">N</span>
+            <span>Nonna<small>PIZZA</small></span>
+        </a>
+        <nav class="menu-topo" aria-label="Principal">
+            <a href="cardapio.html" aria-current="page">Cardápio</a>
+            <a href="historico.html">Meus Pedidos</a>
+            <a href="endereco.html">Minha Conta</a>
+            <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho, 3 itens">
+                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span class="carrinho-qtd">3</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<div class="barra-busca">
+    <div class="container">
+        <label class="busca">
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="search" placeholder="Buscar sabor..." aria-label="Buscar sabor" data-filtro=".pizza-card">
+        </label>
+    </div>
+</div>
+
+<main>
+    <div class="container">
+        <h1 class="titulo-pagina titulo-italico">Pizzas e Sabores</h1>
+
+        <div class="grade-pizzas">
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Marguerita.png" alt="Pizza Margherita" loading="lazy">
+                <h3>Margherita</h3>
+                <p>Molho de tomate, mussarela flor di latte, manjericão fresco e azeite extra virgem</p>
+                <span class="valor">R$ 42,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Calabresa-especial.png" alt="Pizza Calabresa" loading="lazy">
+                <h3>Calabresa</h3>
+                <p>Molho de tomate, mussarela, calabresa fatiada, cebola roxa e azeitonas pretas</p>
+                <span class="valor">R$ 44,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Quatro-queijos.png" alt="Pizza Quatro Queijos" loading="lazy">
+                <h3>Quatro Queijos</h3>
+                <p>Mussarela, parmesão, catupiry e gorgonzola com toque de orégano</p>
+                <span class="valor">R$ 49,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Frango-com-Catupiry.png" alt="Pizza Frango com Catupiry" loading="lazy">
+                <h3>Frango com Catupiry</h3>
+                <p>Frango desfiado temperado, catupiry original, milho e orégano</p>
+                <span class="valor">R$ 47,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Marguerita.png" alt="Pizza Rúcula e Parma" loading="lazy">
+                <h3>Rúcula e Parma</h3>
+                <p>Molho pesto, mussarela, presunto parma e rúcula fresca com lascas de parmesão</p>
+                <span class="valor">R$ 54,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/portuguesa.png" alt="Pizza Portuguesa" loading="lazy">
+                <h3>Portuguesa</h3>
+                <p>Molho de tomate, mussarela, ovo, presunto, cebola, pimentão e azeitonas</p>
+                <span class="valor">R$ 46,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Marguerita.png" alt="Pizza Vegana da Nonna" loading="lazy">
+                <h3>Vegana da Nonna</h3>
+                <p>Molho de tomate, queijo vegano, cogumelos, berinjela assada e rúcula fresca</p>
+                <span class="valor">R$ 51,90</span>
+            </article>
+
+            <article class="pizza-card">
+                <img src="imagem%20das%20pizzas/Quatro-Queijos-Branca-com-Figos-e-Mel.png" alt="Pizza Nutella e Morango" loading="lazy">
+                <h3>Nutella &amp; Morango</h3>
+                <p>Base de Nutella, morangos frescos, calda de chocolate e açúcar de confeiteiro</p>
+                <span class="valor">R$ 39,90</span>
+            </article>
+        </div>
+    </div>
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        <a href="landing.html" class="marca">
+            <span class="marca-selo" aria-hidden="true">N</span>
+            Nonna Pizza
+        </a>
+        <p>&copy; 2026 Nonna Pizza. Todos os direitos reservados.</p>
+        <nav aria-label="Rodapé">
+            <a href="#">Privacidade</a>
+            <a href="#">Termos</a>
+        </nav>
+    </div>
+</footer>
+
+<script src="js/filtro.js"></script>
+</body>
+</html>
