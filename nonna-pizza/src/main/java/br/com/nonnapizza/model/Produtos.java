@@ -6,7 +6,14 @@ public class Produtos {
     private String tipo;
     private float valor;
     private String descricao;
+    private String id;
 
+    public Produtos() {}
+
+    public Produtos(String id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
     public String getNome() {
         return nome;
@@ -38,5 +45,13 @@ public class Produtos {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
