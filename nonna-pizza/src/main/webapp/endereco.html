@@ -35,7 +35,7 @@
         <section>
             <h1 class="titulo-simples">Endereço de Entrega</h1>
 
-            <form action="/create-endereco" method="post" class="bloco formulario">
+            <form action="create-endereco" method="post" class="bloco formulario">
                 <p class="formulario-titulo">Novo endereço</p>
 
                 <div class="linha-campos linha-cep">
@@ -85,29 +85,9 @@
         <aside class="enderecos-salvos">
             <h2>Endereços salvos</h2>
 
-            <article class="endereco-salvo endereco-salvo--padrao">
-                <header>
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Casa
-                    <span class="selo-padrao">Padrão</span>
-                </header>
-                <p>Rua das Flores, 123 — Apto 4B<br>Jardim Europa, São Paulo</p>
-                <div class="endereco-acoes">
-                    <button type="button" class="btn btn-secundario">✎ Editar</button>
-                </div>
-            </article>
+            <div id="lista-enderecos"></div>
 
-            <article class="endereco-salvo">
-                <header>
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Trabalho
-                </header>
-                <p>Av. Paulista, 1000 — Sala 302<br>Bela Vista, São Paulo</p>
-                <div class="endereco-acoes">
-                    <button type="button" class="btn btn-secundario">✎ Editar</button>
-                    <button type="button" class="btn btn-ouro">Definir como padrão</button>
-                </div>
-            </article>
+            <a href="checkout.html" class="btn btn-primario">Ir para o pagamento →</a>
         </aside>
     </div>
 </main>
@@ -126,6 +106,7 @@
     </div>
 </footer>
 
+<script src="js/app.js"></script>
 <script src="js/endereco.js"></script>
 </body>
 </html>

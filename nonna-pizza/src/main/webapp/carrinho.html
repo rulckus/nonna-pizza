@@ -36,94 +36,28 @@
 
         <div class="duas-colunas">
             <section aria-label="Itens do pedido">
-                <div class="lista-carrinho">
-                    <article class="item-carrinho" data-preco="49.90">
-                        <img src="imagem%20das%20pizzas/Quatro-queijos.png" alt="">
-                        <div class="item-info">
-                            <div class="item-linha">
-                                <h2>Quatro Queijos</h2>
-                                <strong class="item-total">R$ 99,80</strong>
-                            </div>
-                            <p class="item-tamanho">Grande (35cm)</p>
-                            <div class="item-acoes">
-                                <div class="quantidade">
-                                    <button type="button" data-acao="menos" aria-label="Diminuir quantidade">&minus;</button>
-                                    <output>2</output>
-                                    <button type="button" data-acao="mais" aria-label="Aumentar quantidade">+</button>
-                                </div>
-                                <label class="observacao">
-                                    <span aria-hidden="true">✎</span>
-                                    <input type="text" value="Sem parmesão" placeholder="Observação (ex: sem cebola)" aria-label="Observação">
-                                </label>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="item-carrinho" data-preco="42.90">
-                        <img src="imagem%20das%20pizzas/Marguerita.png" alt="">
-                        <div class="item-info">
-                            <div class="item-linha">
-                                <h2>Margherita</h2>
-                                <strong class="item-total">R$ 42,90</strong>
-                            </div>
-                            <p class="item-tamanho">Média (30cm)</p>
-                            <div class="item-acoes">
-                                <div class="quantidade">
-                                    <button type="button" data-acao="menos" aria-label="Diminuir quantidade">&minus;</button>
-                                    <output>1</output>
-                                    <button type="button" data-acao="mais" aria-label="Aumentar quantidade">+</button>
-                                </div>
-                                <label class="observacao">
-                                    <span aria-hidden="true">✎</span>
-                                    <input type="text" placeholder="Observação (ex: sem cebola)" aria-label="Observação">
-                                </label>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="item-carrinho" data-preco="39.90">
-                        <img src="imagem%20das%20pizzas/Quatro-Queijos-Branca-com-Figos-e-Mel.png" alt="">
-                        <div class="item-info">
-                            <div class="item-linha">
-                                <h2>Nutella &amp; Morango</h2>
-                                <strong class="item-total">R$ 39,90</strong>
-                            </div>
-                            <p class="item-tamanho">Pequena (25cm)</p>
-                            <div class="item-acoes">
-                                <div class="quantidade">
-                                    <button type="button" data-acao="menos" aria-label="Diminuir quantidade">&minus;</button>
-                                    <output>1</output>
-                                    <button type="button" data-acao="mais" aria-label="Aumentar quantidade">+</button>
-                                </div>
-                                <label class="observacao">
-                                    <span aria-hidden="true">✎</span>
-                                    <input type="text" value="Extra morango" placeholder="Observação (ex: sem cebola)" aria-label="Observação">
-                                </label>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                <div class="lista-carrinho"></div>
 
                 <a href="cardapio.html" class="adicionar-itens">+ Adicionar mais itens</a>
             </section>
 
-            <aside class="resumo" data-entrega="6.99">
+            <aside class="resumo">
                 <h2>Resumo do Pedido</h2>
                 <dl>
                     <div class="linha-resumo">
                         <dt>Subtotal</dt>
-                        <dd id="subtotal">R$ 182,60</dd>
+                        <dd id="subtotal"></dd>
                     </div>
                     <div class="linha-resumo">
                         <dt>Taxa de entrega</dt>
-                        <dd>R$ 6,99</dd>
+                        <dd id="taxa"></dd>
                     </div>
                     <div class="linha-resumo linha-total">
                         <dt>Total</dt>
-                        <dd id="total">R$ 189,59</dd>
+                        <dd id="total"></dd>
                     </div>
                 </dl>
-                <a href="endereco.html" class="btn btn-primario btn-grande">Continuar para entrega</a>
+                <a href="checkout.html" id="continuar" class="btn btn-primario btn-grande">Continuar para entrega</a>
                 <a href="cardapio.html" class="voltar">← Voltar ao cardápio</a>
             </aside>
         </div>
@@ -144,6 +78,7 @@
     </div>
 </footer>
 
+<script src="js/app.js"></script>
 <script src="js/carrinho.js"></script>
 </body>
 </html>

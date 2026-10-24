@@ -137,3 +137,11 @@
         border-left: 0;
     }
 }
+.erro-form {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #b8333f;
+    background: #f6d6da;
+    border-radius: 8px;
+}

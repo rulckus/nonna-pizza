@@ -34,50 +34,20 @@
     <div class="container">
         <h1 class="titulo-pagina">Finalizar pedido</h1>
 
-        <!-- Por enquanto segue para o histórico; troque o action pelo servlet de pedidos quando existir -->
-        <form id="checkout" action="historico.html" method="get" class="duas-colunas duas-colunas--checkout">
+        <form id="checkout" class="duas-colunas duas-colunas--checkout">
             <div>
                 <section class="bloco">
                     <h2>Itens do pedido</h2>
-                    <div class="item-resumo">
-                        <img src="imagem%20das%20pizzas/Quatro-queijos.png" alt="">
-                        <div>
-                            <strong>Quatro Queijos</strong>
-                            <small>Grande × 2</small>
-                        </div>
-                        <strong>R$ 99,80</strong>
-                    </div>
-                    <div class="item-resumo">
-                        <img src="imagem%20das%20pizzas/Marguerita.png" alt="">
-                        <div>
-                            <strong>Margherita</strong>
-                            <small>Média × 1</small>
-                        </div>
-                        <strong>R$ 42,90</strong>
-                    </div>
-                    <div class="item-resumo">
-                        <img src="imagem%20das%20pizzas/Quatro-Queijos-Branca-com-Figos-e-Mel.png" alt="">
-                        <div>
-                            <strong>Nutella &amp; Morango</strong>
-                            <small>Pequena × 1</small>
-                        </div>
-                        <strong>R$ 39,90</strong>
-                    </div>
+                    <div id="itens"></div>
                 </section>
 
                 <section class="bloco">
                     <div class="bloco-topo">
                         <h2>Endereço de entrega</h2>
-                        <a href="endereco.html">Alterar</a>
+                        <a href="endereco.html">Cadastrar/alterar</a>
                     </div>
-                    <div class="endereco-entrega">
-                        <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <p>
-                            <strong>Casa</strong><br>
-                            Rua das Flores, 123 — Apto 4B<br>
-                            Jardim Europa, São Paulo
-                        </p>
-                    </div>
+                    <select name="endereco" id="endereco" required></select>
+                    <p id="aviso" role="alert"></p>
                 </section>
 
                 <section class="bloco">
@@ -104,15 +74,15 @@
                 <dl>
                     <div class="linha-resumo">
                         <dt>Subtotal</dt>
-                        <dd>R$ 182,60</dd>
+                        <dd id="subtotal"></dd>
                     </div>
                     <div class="linha-resumo">
                         <dt>Entrega</dt>
-                        <dd>R$ 6,99</dd>
+                        <dd id="taxa"></dd>
                     </div>
                     <div class="linha-resumo linha-total">
                         <dt>Total</dt>
-                        <dd>R$ 189,59</dd>
+                        <dd id="total"></dd>
                     </div>
                 </dl>
                 <button type="submit" class="btn btn-primario btn-grande">Confirmar pedido</button>
@@ -135,5 +105,7 @@
     </div>
 </footer>
 
+<script src="js/app.js"></script>
+<script src="js/checkout.js"></script>
 </body>
 </html>

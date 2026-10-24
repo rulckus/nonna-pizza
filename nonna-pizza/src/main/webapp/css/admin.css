@@ -480,3 +480,31 @@ form textarea:focus {
 .conteudo .busca {
     margin-bottom: 16px;
 }
+/* ===== Acréscimos (telas dinâmicas) ===== */
+.status-pronto {
+    background: #ece4fa;
+    color: #6d28d9;
+}
+
+.campo-preco {
+    width: 80px;
+    padding: 4px 6px;
+    font: inherit;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+}
+
+.btn-excluir {
+    padding: 4px 10px;
+    font: inherit;
+    font-size: 11px;
+    color: #b8333f;
+    background: none;
+    border: 1px solid #b8333f;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.painel button[type="submit"] {
+    margin-top: 14px;
+}

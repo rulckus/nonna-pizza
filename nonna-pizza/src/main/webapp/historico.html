@@ -34,64 +34,7 @@
     <div class="container">
         <h1 class="titulo-pagina titulo-italico">Histórico de Pedidos</h1>
 
-        <ul class="lista-pedidos">
-            <li class="pedido">
-                <div class="pedido-numero">#1 <time datetime="2024-06-14">14 jun 2024</time></div>
-                <ul>
-                    <li>2× Quatro Queijos (G)</li>
-                    <li>1× Margherita (M)</li>
-                    <li>1× Nutella &amp; Morango (P)</li>
-                </ul>
-                <span class="pedido-total">R$ 188,59</span>
-                <span class="selo selo-entregue">Entregue</span>
-                <a href="carrinho.html" class="btn btn-primario">
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    Pedir novamente
-                </a>
-            </li>
-
-            <li class="pedido">
-                <div class="pedido-numero">#2 <time datetime="2024-06-07">7 jun 2024</time></div>
-                <ul>
-                    <li>1× Rúcula e Parma (G)</li>
-                    <li>1× Calabresa (M)</li>
-                </ul>
-                <span class="pedido-total">R$ 99,80</span>
-                <span class="selo selo-entregue">Entregue</span>
-                <a href="carrinho.html" class="btn btn-primario">
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    Pedir novamente
-                </a>
-            </li>
-
-            <li class="pedido">
-                <div class="pedido-numero">#3 <time datetime="2024-05-28">28 mai 2024</time></div>
-                <ul>
-                    <li>3× Margherita (G)</li>
-                    <li>1× Frango com Catupiry (M)</li>
-                </ul>
-                <span class="pedido-total">R$ 170,60</span>
-                <span class="selo selo-cancelado">Cancelado</span>
-                <a href="carrinho.html" class="btn btn-primario">
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    Pedir novamente
-                </a>
-            </li>
-
-            <li class="pedido">
-                <div class="pedido-numero">#4 <time datetime="2024-05-21">21 mai 2024</time></div>
-                <ul>
-                    <li>1× Vegana da Nonna (G)</li>
-                    <li>1× Nutella &amp; Morango (P)</li>
-                </ul>
-                <span class="pedido-total">R$ 91,80</span>
-                <span class="selo selo-entregue">Entregue</span>
-                <a href="carrinho.html" class="btn btn-primario">
-                    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    Pedir novamente
-                </a>
-            </li>
-        </ul>
+        <ul class="lista-pedidos" id="pedidos"></ul>
     </div>
 </main>
 
@@ -109,5 +52,7 @@
     </div>
 </footer>
 
+<script src="js/app.js"></script>
+<script src="js/historico.js"></script>
 </body>
 </html>

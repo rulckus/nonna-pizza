@@ -30,7 +30,7 @@
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="#">Sair</a>
+                <a href="logout">Sair</a>
             </div>
         </div>
     </aside>
@@ -59,46 +59,15 @@
                     <th>Status</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>#1</td>
-                    <td class="cliente">Bruno M.</td>
-                    <td class="ingredientes">2× Margherita, 1× Refrigerante 2L</td>
-                    <td class="total">R$ 97,79</td>
-                    <td>19:42</td>
-                    <td><span class="status status-recebido">Recebido</span></td>
-                </tr>
-                <tr>
-                    <td>#2</td>
-                    <td class="cliente">Camila S.</td>
-                    <td class="ingredientes">1× Quatro Queijos, 1× Nutella</td>
-                    <td class="total">R$ 89,80</td>
-                    <td>19:38</td>
-                    <td><span class="status status-preparando">Preparando</span></td>
-                </tr>
-                <tr>
-                    <td>#3</td>
-                    <td class="cliente">Rafael S.</td>
-                    <td class="ingredientes">1× Calabresa, 1× Portuguesa</td>
-                    <td class="total">R$ 87,80</td>
-                    <td>19:35</td>
-                    <td><span class="status status-assando">Assando</span></td>
-                </tr>
-                <tr>
-                    <td>#4</td>
-                    <td class="cliente">Lucia M.</td>
-                    <td class="ingredientes">3× Margherita</td>
-                    <td class="total">R$ 128,70</td>
-                    <td>19:20</td>
-                    <td><span class="status status-entregue">Entregue</span></td>
-                </tr>
-                </tbody>
+                <tbody id="pedidos"></tbody>
             </table>
         </section>
 
     </main>
 </div>
 
+<script src="js/app.js"></script>
+<script src="js/admin-pedidos.js"></script>
 <script src="js/filtro.js"></script>
 </body>
 </html>

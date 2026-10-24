@@ -26,8 +26,9 @@
             <span>Que bom te ver de novo</span>
         </div>
 
-        <!-- Ainda não existe servlet de login: criar um mapeado em /login -->
-        <form action="/login" method="post" class="auth-form">
+        <p class="erro-form" id="erro" role="alert" hidden>E-mail ou senha incorretos.</p>
+
+        <form action="login" method="post" class="auth-form">
             <div>
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="voce@email.com" autocomplete="email" required>
@@ -44,5 +45,8 @@
     </section>
 </main>
 
+<script>
+    if (location.search.includes("erro")) document.getElementById("erro").hidden = false;
+</script>
 </body>
 </html>

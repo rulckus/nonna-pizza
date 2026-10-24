@@ -33,3 +33,15 @@ document.getElementById("buscar-cep").addEventListener("click", async () => {
         avisar("Não foi possível buscar o CEP agora.");
     }
 });
+
+// Lista os endereços já salvos do cliente.
+api("api/enderecos").then((enderecos) => {
+    document.getElementById("lista-enderecos").innerHTML = enderecos.length ? enderecos.map((e) => `
+        <article class="endereco-salvo">
+            <header>
+                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${esc(e.rua)}, ${esc(e.numero)}
+            </header>
+            <p>${esc(e.complemento)}${e.complemento ? " — " : ""}${esc(e.bairro)}, ${esc(e.cidade)}<br>CEP ${esc(e.cep)}</p>
+        </article>`).join("") : "<p>Nenhum endereço salvo ainda.</p>";
+});

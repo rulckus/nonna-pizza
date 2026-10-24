@@ -30,7 +30,7 @@
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="#">Sair</a>
+                <a href="logout">Sair</a>
             </div>
         </div>
     </aside>
@@ -42,130 +42,37 @@
             <h2>Produção — Cozinha</h2>
             <p class="atualizado">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                Atualizado às 20:44
+                Atualizado às <span id="hora">--:--</span>
             </p>
         </header>
 
         <div class="quadro">
 
             <section class="coluna coluna-recebido">
-                <h3 class="coluna-topo">Recebido <span class="contador">2</span></h3>
-                <div class="lista">
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#1</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                20:41
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">Bruno M.</p>
-                        <ul class="pedido-itens">
-                            <li>2× Margherita</li>
-                            <li>1× Calabresa</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">→ Avançar</button>
-                    </article>
-
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#2</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                20:43
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">Camila S.</p>
-                        <ul class="pedido-itens">
-                            <li>1× Quatro Queijos</li>
-                            <li>1× Nutella</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">→ Avançar</button>
-                    </article>
-                </div>
+                <h3 class="coluna-topo">Recebido <span class="contador">0</span></h3>
+                <div class="lista"></div>
             </section>
 
             <section class="coluna coluna-preparando">
-                <h3 class="coluna-topo">Preparando <span class="contador">1</span></h3>
-                <div class="lista">
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#3</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                20:21
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">Rafael S.</p>
-                        <ul class="pedido-itens">
-                            <li>1× Rúcula e Parma</li>
-                            <li>1× Portuguesa</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">→ Avançar</button>
-                    </article>
-                </div>
+                <h3 class="coluna-topo">Preparando <span class="contador">0</span></h3>
+                <div class="lista"></div>
             </section>
 
             <section class="coluna coluna-assando">
-                <h3 class="coluna-topo">Assando <span class="contador">2</span></h3>
-                <div class="lista">
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#4</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                20:10
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">Lucia M.</p>
-                        <ul class="pedido-itens">
-                            <li>3× Margherita</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">→ Avançar</button>
-                    </article>
-
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#5</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                19:58
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">João L.</p>
-                        <ul class="pedido-itens">
-                            <li>1× Frango c/ Catupiry</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">→ Avançar</button>
-                    </article>
-                </div>
+                <h3 class="coluna-topo">Assando <span class="contador">0</span></h3>
+                <div class="lista"></div>
             </section>
 
             <section class="coluna coluna-pronto">
-                <h3 class="coluna-topo">Pronto para entrega <span class="contador">1</span></h3>
-                <div class="lista">
-                    <article class="pedido-card">
-                        <div class="pedido-cabecalho">
-                            <span>#6</span>
-                            <span class="pedido-hora">
-                                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                19:40
-                            </span>
-                        </div>
-                        <p class="pedido-cliente">Mariana C.</p>
-                        <ul class="pedido-itens">
-                            <li>2× Calabresa</li>
-                            <li>1× Refrigerante</li>
-                        </ul>
-                        <button type="button" class="btn btn-avancar">✓ Confirmar entrega</button>
-                    </article>
-                </div>
+                <h3 class="coluna-topo">Pronto para entrega <span class="contador">0</span></h3>
+                <div class="lista"></div>
             </section>
 
         </div>
     </main>
 </div>
 
+<script src="js/app.js"></script>
 <script src="js/producao.js"></script>
 </body>
 </html>
