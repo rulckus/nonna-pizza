@@ -52,10 +52,10 @@ public class PizzaDao {
 
             while (resultSet.next()) {
 
-                Pizza pizza = new Pizza();
-
+                String id = resultSet.getString("id_pizza");
                 String sabores = resultSet.getString("sabor");
-                pizza.setSabor(sabores);
+
+                Pizza pizza = new Pizza(sabores, id);
 
                 pizzas.add(pizza);
             }
@@ -69,5 +69,31 @@ public class PizzaDao {
         }
 
         return Collections.emptyList();
+    }
+
+    public void deletePizzaById(String pizzaId) {
+
+        String SQL = "DELETE PIZZAS WHERE ID_PIZZA = ?";
+
+        try {
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            System.out.println("success in database connection");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, pizzaId);
+            preparedStatement.execute();
+
+            System.out.println("Pizza deletada com sucesso " + pizzaId);
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("fail in database connection");
+
+        }
+
     }
 }

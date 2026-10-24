@@ -5,6 +5,14 @@ public class Pizza {
     private String tipo;
     private float valor;
     private String descricao;
+    private String id;
+
+    public Pizza() {}
+
+    public Pizza(String sabor, String id) {
+        this.sabor = sabor;
+        this.id = id;
+    }
 
 
     public String getSabor() {
@@ -38,4 +46,10 @@ public class Pizza {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {}
 }
