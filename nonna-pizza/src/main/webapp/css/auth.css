@@ -1,0 +1,147 @@
+/* Login e cadastro. Usar junto com base.css */
+
+.auth {
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 420px);
+    min-height: 100vh;
+    background: #1a0e0a;
+    color: #f3e7d6;
+}
+
+/* Lado esquerdo: imagem + frase.
+   Para usar uma foto, troque o último gradiente por url("../imagens/salao.jpg") center / cover */
+.auth-visual {
+    display: flex;
+    align-items: flex-end;
+    padding: 48px;
+    background:
+        linear-gradient(0deg, rgba(15, 8, 5, 0.85), rgba(15, 8, 5, 0.1) 60%),
+        radial-gradient(circle at 45% 40%, #d9822b 0%, #6b2d10 30%, #2a150d 70%);
+}
+
+.auth-visual blockquote {
+    max-width: 420px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.auth-painel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 40px;
+    background: #1c100b;
+    border-left: 1px solid #3a2419;
+}
+
+.auth-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.auth-marca .marca-selo {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    border: 2px solid #a8323a;
+    background: var(--vinho);
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: white;
+}
+
+.auth-marca strong {
+    font-size: 16px;
+    color: var(--dourado);
+}
+
+.auth-marca span {
+    font-size: 11px;
+    color: #8a7666;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #a89080;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #4a3228;
+    border-radius: 6px;
+    background: #2a1812;
+    font: inherit;
+    font-size: 13px;
+    color: #f3e7d6;
+}
+
+.auth-form input::placeholder {
+    color: #7a6455;
+}
+
+.auth-form input:focus {
+    outline: 2px solid var(--vinho);
+}
+
+.auth-form .btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.auth-troca {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 11px;
+    color: #8a7666;
+}
+
+.auth-troca a {
+    color: var(--dourado);
+    text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+    .auth {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-visual {
+        min-height: 180px;
+        padding: 24px;
+    }
+
+    .auth-painel {
+        border-left: 0;
+    }
+}
+.erro-form {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #b8333f;
+    background: #f6d6da;
+    border-radius: 8px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Nonna Pizza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<main class="auth">
+    <section class="auth-visual">
+        <blockquote>
+            <p>"Cada pizza saída deste forno carrega o amor de gerações."</p>
+        </blockquote>
+    </section>
+
+    <section class="auth-painel">
+        <div class="auth-marca">
+            <span class="marca-selo" aria-hidden="true">N</span>
+            <strong>Nonna Pizza</strong>
+            <span>Que bom te ver de novo</span>
+        </div>
+
+        <p class="erro-form" id="erro" role="alert" hidden>E-mail ou senha incorretos.</p>
+
+        <form action="login" method="post" class="auth-form">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="voce@email.com" autocomplete="email" required>
+            </div>
+            <div>
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" placeholder="Sua senha" autocomplete="current-password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primario">Entrar</button>
+        </form>
+
+        <p class="auth-troca">Ainda não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+    </section>
+</main>
+
+<script>
+    if (location.search.includes("erro")) document.getElementById("erro").hidden = false;
+</script>
+</body>
+</html>
