@@ -17,6 +17,7 @@ public class CreatePizzaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String idPizza = request.getParameter("idPizza");
         String sabor = request.getParameter("sabor");
         String tipo = request.getParameter("tipo");
         float valor = Float.parseFloat(request.getParameter("valor"));
@@ -31,7 +32,12 @@ public class CreatePizzaServlet extends HttpServlet {
 
         PizzaDao pizzaDao = new PizzaDao();
 
-        pizzaDao.inserirPizza(pizza);
+        if (idPizza.isBlank()) {
+            pizzaDao.inserirPizza(pizza);
+        }
+        else {
+            pizzaDao.atualizarPizza(pizza);
+        }
 
         response.sendRedirect("/find-all-pizzas");
     }

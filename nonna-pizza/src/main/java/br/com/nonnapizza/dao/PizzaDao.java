@@ -1,6 +1,7 @@
 package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Pizza;
+import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,10 +14,10 @@ import java.util.List;
 public class PizzaDao {
 
     public void inserirPizza(Pizza pizza){
-        String SQL = "INSERT INTO PIZZAS(SABOR, TIPO, VALOR, DESCRICAO) VALUES (?, ?, ?, ?);";
+        String SQL = "INSERT INTO PIZZAS(SABOR, TIPO, VALOR, DESCRICAO, DISPONIBILIDADE) VALUES (?, ?, ?, ?, ?);";
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
@@ -26,6 +27,8 @@ public class PizzaDao {
             preparedStatement.setString(2, pizza.getTipo());
             preparedStatement.setFloat(3, pizza.getValor());
             preparedStatement.setString(4, pizza.getDescricao());
+            preparedStatement.setInt(5, 1);
+
 
             preparedStatement.execute();
 
@@ -42,7 +45,7 @@ public class PizzaDao {
         String SQL = "SELECT * FROM PIZZAS";
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
@@ -77,7 +80,7 @@ public class PizzaDao {
 
         try {
 
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             System.out.println("success in database connection");
 
@@ -95,5 +98,65 @@ public class PizzaDao {
 
         }
 
+    }
+
+    public List<Pizza> listarPizzasCardapio(){
+        String SQL = "SELECT * FROM PIZZAS WHERE DISPONIBILIDADE = TRUE";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Pizza> pizzas = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                Pizza pizza = new Pizza();
+
+                pizza.setSabor(resultSet.getString("sabor"));
+                pizza.setValor(resultSet.getFloat("valor"));
+                pizza.setDescricao(resultSet.getString("descricao"));
+
+                pizzas.add(pizza);
+            }
+
+            System.out.println("Sucesso ao consultar Pizzas!");
+            connection.close();
+
+            return pizzas;
+        }catch (Exception e){
+            System.out.println("Erro ao listar pizzas: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    public void atualizarPizza(Pizza pizza){
+        String SQL = "UPDATE PIZZAS SET SABOR = ? WHERE ID = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            System.out.println("success in database connection");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, pizza.getSabor());
+            preparedStatement.setString(2, pizza.getId());
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pizza");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
     }
 }

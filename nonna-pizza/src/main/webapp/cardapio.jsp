@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
             <span>Nonna<small>PIZZA</small></span>
         </a>
         <nav class="menu-topo" aria-label="Principal">
-            <a href="cardapio.html" aria-current="page">Cardápio</a>
+            <a href="/cardapio" aria-current="page">Cardápio</a>
             <a href="historico.html">Meus Pedidos</a>
             <a href="endereco.html">Minha Conta</a>
             <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho, 3 itens">
@@ -43,7 +44,16 @@
     <div class="container">
         <h1 class="titulo-pagina titulo-italico">Pizzas e Sabores</h1>
 
-        <div class="grade-pizzas" id="grade"><p>Carregando...</p></div>
+        <div class="grade-pizzas" id="grade">
+            <c:forEach var="pizzasCardapio" items="${pizzasCardapio}">
+                <div>
+                    <h4>${pizzasCardapio.sabor}</h4>
+                    <p>${pizzasCardapio.descricao}</p>
+                    <p>${pizzasCardapio.valor} </p>
+                </div>
+            </c:forEach>
+        </div>
+
     </div>
 </main>
 
@@ -62,7 +72,7 @@
 </footer>
 
 <script src="js/app.js"></script>
-<script src="js/cardapio.js"></script>
+<script src=></script>
 <script src="js/filtro.js"></script>
 </body>
 </html>

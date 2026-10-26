@@ -22,6 +22,6 @@ public class ListPizzasServlet extends HttpServlet {
 
         req.setAttribute("pizzas", pizzas);
 
-        req.getRequestDispatcher("pizzadashboard.jsp").forward(req, resp);
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }

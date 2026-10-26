@@ -32,6 +32,6 @@ public class CreateClienteServlet extends HttpServlet {
 
         clienteDao.inserirCliente(cliente);
 
-        req.getRequestDispatcher("/find-all-address").forward(req, resp);
+        req.getRequestDispatcher("/login.html").forward(req, resp);
     }
 }

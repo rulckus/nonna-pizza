@@ -1,7 +1,7 @@
 // Cardápio do cliente: pizzas vêm do banco (GET /api/pizzas).
 const grade = document.getElementById("grade");
 
-api("api/pizzas").then((pizzas) => {
+api("/cardapio").then((pizzas) => {
     const porId = Object.fromEntries(pizzas.map((p) => [p.id, p])); // atalho: porId[3] -> pizza 3
 
     grade.innerHTML = pizzas.length ? pizzas.map((p) => `

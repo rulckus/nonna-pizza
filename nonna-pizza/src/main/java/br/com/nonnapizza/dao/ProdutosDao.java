@@ -2,6 +2,7 @@ package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Pizza;
 import br.com.nonnapizza.model.Produtos;
+import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,7 +42,7 @@ public class ProdutosDao {
         String SQL = "SELECT * FROM PRODUTOS";
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
@@ -78,9 +79,7 @@ public class ProdutosDao {
 
         try {
 
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
-
-            System.out.println("success in database connection");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, produtoId);

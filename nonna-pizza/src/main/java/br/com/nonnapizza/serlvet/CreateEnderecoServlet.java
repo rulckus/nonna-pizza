@@ -17,6 +17,7 @@ public class CreateEnderecoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String id = request.getParameter("id");
         String ruaNome = request.getParameter("rua");
         String numero = request.getParameter("numero");
         String complemento = request.getParameter("complemento");
@@ -34,9 +35,14 @@ public class CreateEnderecoServlet extends HttpServlet {
         endereco.setCidade(cidade);
 
         EnderecoDao enderecoDao = new EnderecoDao();
-        enderecoDao.criarEndereco(endereco);
 
-        request.getRequestDispatcher("index.html").forward(request, response);
+        if (id.isBlank()){
+            enderecoDao.criarEndereco(endereco);
+        }else {
+            enderecoDao.atualizarEndereco(endereco);
+        }
+
+        request.getRequestDispatcher("endereco.html").forward(request, response);
 
     }
 }

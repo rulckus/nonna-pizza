@@ -2,6 +2,7 @@ package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Cliente;
 import br.com.nonnapizza.model.Endereco;
+import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +14,7 @@ public class ClienteDao{
         String SQL = "INSERT INTO CLIENTE(NOME, EMAIL, TELEFONE, SENHA) VALUES (?, ?, ?, ?);";
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
@@ -34,4 +35,6 @@ public class ClienteDao{
             System.out.println("Erro ao inserir cliente" + e.getMessage());
         }
     }
+
+
 }

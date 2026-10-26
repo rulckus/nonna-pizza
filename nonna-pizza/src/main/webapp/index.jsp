@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,7 @@
         </div>
 
         <nav class="menu">
-            <a href="index.html" class="ativo">Cardápio</a>
+            <a href="/find-all-pizzas" class="ativo">Cardápio</a>
             <a href="pedidos.html">Pedidos</a>
             <a href="producao.html">Produção</a>
         </nav>
@@ -30,7 +31,7 @@
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="logout">Sair</a>
+                <a href="landing.html">Sair</a>
             </div>
         </div>
     </aside>
@@ -38,7 +39,7 @@
     <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="conteudo">
         <header class="topo">
-            <h2>Gerenciar Cardápio</h2>
+            <h2>Gerenciar Cardapio</h2>
             <a href="#sabor" class="btn btn-primario">+ Novo sabor</a>
         </header>
 
@@ -48,7 +49,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th></th>
+                        <th>ID</th>
                         <th>Pizza</th>
                         <th>Ingredientes</th>
                         <th>Preço</th>
@@ -56,7 +57,16 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody id="pizzas"></tbody>
+                    <tbody id="pizzas">
+                    <c:forEach var="pizzas" items="${pizzas}">
+                        <tr>
+                            <td>${pizzas.id}</td>
+                            <td>${pizzas.sabor}</td>
+                            <td>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
             </section>
 

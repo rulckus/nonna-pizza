@@ -31,6 +31,6 @@ public class CreateProdutoServlet extends HttpServlet {
 
         produtoDao.inserirProduto(produto);
 
-        request.getRequestDispatcher("index.html").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }
