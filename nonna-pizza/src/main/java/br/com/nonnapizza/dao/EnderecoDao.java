@@ -1,5 +1,6 @@
 package br.com.nonnapizza.dao;
 
+import br.com.nonnapizza.model.Cliente;
 import br.com.nonnapizza.model.Endereco;
 import br.com.nonnapizza.model.Produtos;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class EnderecoDao {
 
-    public void criarEndereco(Endereco endereco) {
-            String SQL = "INSERT INTO ENDERECO (RUA, NUMERO, COMPLEMENTO, CEP, BAIRRO, CIDADE) VALUES (?,?,?,?,?,?)";
+    public void criarEndereco(Endereco endereco, Cliente cliente) {
+            String SQL = "INSERT INTO ENDERECO (RUA, NUMERO, COMPLEMENTO, CEP, BAIRRO, CIDADE, ID_CLIENTE) VALUES (?,?,?,?,?,?,?)";
 
             try {
 
@@ -29,6 +30,8 @@ public class EnderecoDao {
                 preparedStatement.setString(4, endereco.getCep());
                 preparedStatement.setString(5, endereco.getBairro());
                 preparedStatement.setString(6, endereco.getCidade());
+                preparedStatement.setString(7, cliente.getId());
+
                 preparedStatement.execute();
 
                 System.out.println("Sucesso ao criar o endereço");
@@ -40,31 +43,29 @@ public class EnderecoDao {
             }
     }
 
-    public List<Endereco> listarEnderecos(){
-        String SQL = "SELECT * FROM ENDERECO";
+    public List<Endereco> listarEnderecos(String id){
+        String SQL = "SELECT * FROM ENDERECO WHERE ID_CLIENTE = ?";
 
         try {
             Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
+            preparedStatement.setString(1, id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Endereco> enderecos = new ArrayList<>();
 
             while (resultSet.next()) {
+                Endereco endereco = new Endereco();
 
-
-                String rua = resultSet.getString("rua");
-                String id = resultSet.getString("id_endereco");
-                String complemento = resultSet.getString("complemento");
-                String cep = resultSet.getString("cep");
-                String bairro = resultSet.getString("bairro");
-                String cidade = resultSet.getString("cidade");
-                String numero = resultSet.getString("numero");
-
-
-                Endereco endereco = new Endereco(id, rua, cep, cidade, numero, complemento, bairro);
+                endereco.setRua(resultSet.getString("rua"));
+                endereco.setComplemento(resultSet.getString("complemento"));
+                endereco.setCep(resultSet.getString("cep"));
+                endereco.setBairro(resultSet.getString("bairro"));
+                endereco.setCidade(resultSet.getString("cidade"));
+                endereco.setNumero(resultSet.getString("numero"));
 
 
                 enderecos.add(endereco);

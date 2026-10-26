@@ -8,6 +8,7 @@ public class Endereco {
     private String numero;
     private String complemento;
     private String bairro;
+    private String idCliente;
 
     public Endereco() {
     }
@@ -74,4 +75,16 @@ public class Endereco {
         return id;
     }
     public void setId(int id) {}
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
 }

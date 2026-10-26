@@ -2,6 +2,7 @@ package br.com.nonnapizza.serlvet;
 
 
 import br.com.nonnapizza.dao.EnderecoDao;
+import br.com.nonnapizza.model.Cliente;
 import br.com.nonnapizza.model.Endereco;
 
 import javax.servlet.ServletException;
@@ -33,16 +34,23 @@ public class CreateEnderecoServlet extends HttpServlet {
         endereco.setCep(cep);
         endereco.setBairro(bairro);
         endereco.setCidade(cidade);
+        Cliente cliente = (Cliente) request.getSession().getAttribute("loggeduser");
 
-        EnderecoDao enderecoDao = new EnderecoDao();
-
-        if (id.isBlank()){
-            enderecoDao.criarEndereco(endereco);
+        if (cliente == null) {
+            request.getRequestDispatcher("login.html").forward(request, response);
         }else {
-            enderecoDao.atualizarEndereco(endereco);
-        }
+            EnderecoDao enderecoDao = new EnderecoDao();
 
-        request.getRequestDispatcher("endereco.html").forward(request, response);
+    //        if (id.isBlank()){
+    //            enderecoDao.criarEndereco(endereco);
+    //        }else {
+    //            enderecoDao.atualizarEndereco(endereco);
+    //        }
+
+            enderecoDao.criarEndereco(endereco, cliente);
+
+            request.getRequestDispatcher("endereco.jsp").forward(request, response);
+        }
 
     }
 }

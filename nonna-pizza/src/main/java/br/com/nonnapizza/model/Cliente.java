@@ -1,10 +1,25 @@
 package br.com.nonnapizza.model;
 
 public class Cliente {
+    private String id;
     private String nome;
     private String email;
     private String telefone;
     private String senha;
+
+    public Cliente(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Cliente(String id, String email, String senha) {
+        this.id = id;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Cliente() {
+    }
 
     public String getNome() {
         return nome;
@@ -37,6 +52,11 @@ public class Cliente {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {}
 
 
 }

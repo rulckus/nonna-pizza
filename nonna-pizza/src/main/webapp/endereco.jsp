@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,7 +86,16 @@
         <aside class="enderecos-salvos">
             <h2>Endereços salvos</h2>
 
-            <div id="lista-enderecos"></div>
+            <div id="lista-enderecos">
+                <c:forEach var="item" items="${enderecos}">
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.rua}</td>
+                        <td>${item.numero}</td>
+                    </tr>
+                </c:forEach>
+
+            </div>
 
             <a href="checkout.html" class="btn btn-primario">Ir para o pagamento →</a>
         </aside>
