@@ -60,6 +60,7 @@ public class EnderecoDao {
             while (resultSet.next()) {
                 Endereco endereco = new Endereco();
 
+                endereco.setId(resultSet.getString("ID_ENDERECO"));
                 endereco.setRua(resultSet.getString("rua"));
                 endereco.setComplemento(resultSet.getString("complemento"));
                 endereco.setCep(resultSet.getString("cep"));

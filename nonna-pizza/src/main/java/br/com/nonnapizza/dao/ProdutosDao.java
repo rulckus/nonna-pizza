@@ -24,7 +24,7 @@ public class ProdutosDao {
 
             preparedStatement.setString(1, produtos.getNome());
             preparedStatement.setString(2, produtos.getTipo());
-            preparedStatement.setFloat(3, produtos.getValor());
+            preparedStatement.setBigDecimal(3, produtos.getValor());
             preparedStatement.setString(4, produtos.getDescricao());
 
             preparedStatement.execute();
@@ -95,5 +95,42 @@ public class ProdutosDao {
 
         }
 
+    }
+
+    public Produtos acharProdutoId(Long produtoId) {
+
+        String SQL = "SELECT * FROM PRODUTOS WHERE ID_PRODUTO = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, produtoId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            Produtos produto = new Produtos();
+            produto.setId(resultSet.getString("id_produto"));
+            produto.setNome(resultSet.getString("nome"));
+            produto.setTipo(resultSet.getString("tipo"));
+            produto.setValor(resultSet.getBigDecimal("valor"));
+            produto.setDescricao(resultSet.getString("descricao"));
+
+
+            System.out.println("Produto encontrado com sucesso " + produtoId);
+
+            connection.close();
+            return produto;
+        } catch (Exception e) {
+
+            System.out.println("Falha ao achar o produto");
+
+        }
+        return null;
     }
 }

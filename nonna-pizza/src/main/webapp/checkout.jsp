@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +21,10 @@
             <span>Nonna<small>PIZZA</small></span>
         </a>
         <nav class="menu-topo" aria-label="Principal">
-            <a href="cardapio.jsp">Cardápio</a>
-            <a href="historico.html">Meus Pedidos</a>
-            <a href="endereco.jsp">Minha Conta</a>
-            <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho, 3 itens">
+            <a href="/cardapio">Cardápio</a>
+            <a href="/historico">Meus Pedidos</a>
+            <a href="/endereco">Minha Conta</a>
+            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, 3 itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class="carrinho-qtd">3</span>
             </a>
@@ -34,11 +36,18 @@
     <div class="container">
         <h1 class="titulo-pagina">Finalizar pedido</h1>
 
-        <form id="checkout" class="duas-colunas duas-colunas--checkout">
+        <form action="pedido" method="post" class="duas-colunas duas-colunas--checkout">
             <div>
                 <section class="bloco">
                     <h2>Itens do pedido</h2>
-                    <div id="itens"></div>
+                    <div id="itens">
+                    <c:forEach var="item" items="${carrinho.itens}">
+                       <div class="linha-resumo">
+                           <span>${item.quantidade}x <c:out value="${item.nome}"/></span>
+                           <span><fmt:formatNumber value="${item.preco}" type="currency"/></span>
+                       </div>
+                    </c:forEach>
+                    </div>
                 </section>
 
                 <section class="bloco">
@@ -46,7 +55,14 @@
                         <h2>Endereço de entrega</h2>
                         <a href="endereco.jsp">Cadastrar/alterar</a>
                     </div>
-                    <select name="endereco" id="endereco" required></select>
+                    <select name="endereco" id="endereco" required>
+                            <option>Selecione um endereco</option>
+                        <c:forEach var="e" items="${enderecos}">
+                            <option value="${e.id}">
+                                <c:out value="${e.rua}, ${e.numero} - ${e.bairro}, ${e.cidade}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
                     <p id="aviso" role="alert"></p>
                 </section>
 
@@ -57,14 +73,14 @@
                             <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
                         </span>
                         Cartão de crédito/débito
-                        <input type="radio" name="pagamento" value="cartao" checked>
+                        <input type="radio" name="pagamento" value="1" checked>
                     </label>
                     <label class="opcao-pagamento">
                         <span class="opcao-icone">
                             <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 9-9 9-9-9z"/></svg>
                         </span>
                         Pix
-                        <input type="radio" name="pagamento" value="pix">
+                        <input type="radio" name="pagamento" value="2">
                     </label>
                 </section>
             </div>
@@ -72,18 +88,12 @@
             <aside class="resumo">
                 <h2>Total do Pedido</h2>
                 <dl>
-                    <div class="linha-resumo">
-                        <dt>Subtotal</dt>
-                        <dd id="subtotal"></dd>
-                    </div>
-                    <div class="linha-resumo">
-                        <dt>Entrega</dt>
-                        <dd id="taxa"></dd>
-                    </div>
-                    <div class="linha-resumo linha-total">
-                        <dt>Total</dt>
-                        <dd id="total"></dd>
-                    </div>
+                   <c:forEach var="item" items="${carrinho.itens}">
+                       <div class="linha-resumo">
+                           <span>${item.quantidade}x <c:out value="${item.nome}"/></span>
+                           <span><fmt:formatNumber value="${item.subtotal}" type="currency"/></span>
+                       </div>
+                   </c:forEach>
                 </dl>
                 <button type="submit" class="btn btn-primario btn-grande">Confirmar pedido</button>
             </aside>
@@ -107,5 +117,6 @@
 
 <script src="js/app.js"></script>
 <script src="js/checkout.js"></script>
+<script src="js/carrinho.js"></script>
 </body>
 </html>

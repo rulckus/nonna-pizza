@@ -20,10 +20,10 @@
             <span>Nonna<small>PIZZA</small></span>
         </a>
         <nav class="menu-topo" aria-label="Principal">
-            <a href="cardapio.jsp">Cardápio</a>
-            <a href="historico.html">Meus Pedidos</a>
-            <a href="endereco.html" aria-current="page">Minha Conta</a>
-            <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho, 3 itens">
+            <a href="/cardapio">Cardápio</a>
+            <a href="/historico">Meus Pedidos</a>
+            <a href="/endereco" aria-current="page">Minha Conta</a>
+            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, 3 itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class="carrinho-qtd">3</span>
             </a>
@@ -89,7 +89,7 @@
             <div id="lista-enderecos">
                 <c:forEach var="item" items="${enderecos}">
                     <tr>
-                        <td>${item.id}</td>
+
                         <td>${item.rua}</td>
                         <td>${item.numero}</td>
                     </tr>

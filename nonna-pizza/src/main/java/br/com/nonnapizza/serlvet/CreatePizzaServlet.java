@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet("/create-pizza")
 public class CreatePizzaServlet extends HttpServlet {
@@ -20,8 +21,8 @@ public class CreatePizzaServlet extends HttpServlet {
         String idPizza = request.getParameter("idPizza");
         String sabor = request.getParameter("sabor");
         String tipo = request.getParameter("tipo");
-        float valor = Float.parseFloat(request.getParameter("valor"));
         String descricao = request.getParameter("descricao");
+        BigDecimal valor = new BigDecimal(request.getParameter("valor"));
 
         Pizza pizza = new Pizza();
 

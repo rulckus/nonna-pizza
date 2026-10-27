@@ -1,54 +1,95 @@
-// Checkout: mostra o resumo, deixa escolher o endereço e envia o pedido (POST /api/pedido).
-const itens = carrinho.ler();
-if (!itens.length) location.href = "carrinho.html";
+function renderizarItens() {
+    const itens = lerCarrinho();
 
-const form = document.getElementById("checkout");
-const selectEndereco = document.getElementById("endereco");
-const aviso = document.getElementById("aviso");
-
-let subtotal = 0;
-document.getElementById("itens").innerHTML = itens.map((i) => {
-    subtotal += i.valor * i.qtd;
-    return `
-    <div class="item-resumo">
-        <img src="${foto(i.foto)}" alt="">
-        <div><strong>${esc(i.sabor)}</strong><small>× ${i.qtd}</small></div>
-        <strong>${moeda(i.valor * i.qtd)}</strong>
-    </div>`;
-}).join("");
-document.getElementById("subtotal").textContent = moeda(subtotal);
-document.getElementById("taxa").textContent = moeda(TAXA_ENTREGA);
-document.getElementById("total").textContent = moeda(subtotal + TAXA_ENTREGA);
-
-api("api/enderecos").then((enderecos) => {
-    if (!enderecos.length) {
-        aviso.textContent = "Você ainda não tem endereço cadastrado.";
-        selectEndereco.hidden = true;
-        return;
-    }
-    selectEndereco.innerHTML = enderecos.map((e) =>
-        `<option value="${e.id}">${esc(e.rua)}, ${esc(e.numero)} — ${esc(e.bairro)}, ${esc(e.cidade)}</option>`).join("");
-});
-
-form.addEventListener("submit", async (evento) => {
-    evento.preventDefault();
-    if (selectEndereco.hidden) {
-        aviso.textContent = "Cadastre um endereço para continuar.";
+    if (itens.length === 0) {
+        window.location.href = 'carrinho.jsp';
         return;
     }
 
-    // "3:2,5:1" = pizza 3 (2 unidades) e pizza 5 (1 unidade). O preço é calculado no servidor.
-    const dados = new URLSearchParams({
-        itens: itens.map((i) => `${i.id}:${i.qtd}`).join(","),
-        endereco: selectEndereco.value,
-        pagamento: form.pagamento.value,
-    });
+    document.getElementById('itens').innerHTML = itens.map(i => `
+    <div class="linha-resumo">
+      <span>${i.quantidade}x ${escapar(i.nome)}</span>
+      <span>${moeda(i.preco * i.quantidade)}</span>
+    </div>
+  `).join('');
+
+    const subtotal = itens.reduce((s, i) => s + i.preco * i.quantidade, 0);
+    document.getElementById('total').textContent = moeda(subtotal);
+}
+
+async function carregarEnderecos() {
+    const select = document.getElementById('endereco');
+    const aviso = document.getElementById('aviso');
 
     try {
-        await api("api/pedido", { method: "POST", body: dados });
-        carrinho.salvar([]);
-        location.href = "historico.html";
-    } catch (erro) {
-        aviso.textContent = "Não foi possível finalizar o pedido. Confira se as pizzas ainda estão disponíveis.";
+        const resp = await fetch('enderecos');
+        if (resp.status === 401) {
+            window.location.href = 'login.html';
+            return;
+        }
+        const enderecos = await resp.json();
+
+        if (enderecos.length === 0) {
+            select.innerHTML = '<option value="">Nenhum endereço cadastrado</option>';
+            aviso.textContent = 'Cadastre um endereço para continuar.';
+            return;
+        }
+
+        select.innerHTML = enderecos.map(e =>
+            `<option value="${e.id}">${escapar(`${e.rua}, ${e.numero} - ${e.bairro}, ${e.cidade}`)}</option>`
+        ).join('');
+        aviso.textContent = '';
+    } catch {
+        aviso.textContent = 'Não foi possível carregar seus endereços.';
     }
+}
+
+async function fazerPedido(e) {
+    e.preventDefault();
+
+    const itens = lerCarrinho();
+    const aviso = document.getElementById('aviso');
+    const botao = e.target.querySelector('button[type="submit"]');
+    const idEndereco = document.getElementById('endereco').value;
+
+    if (itens.length === 0) return;
+    if (!idEndereco) {
+        aviso.textContent = 'Selecione um endereço de entrega.';
+        return;
+    }
+
+    const payload = {
+        idEndereco: Number(idEndereco),
+        formaPagamento: document.querySelector('input[name="pagamento"]:checked').value,
+        itens: itens.map(i => ({ tipo: i.tipo, id: Number(i.id), quantidade: i.quantidade }))
+    };
+
+    botao.disabled = true; // evita clique duplo gerando dois pedidos
+
+    try {
+        const resp = await fetch('pedido', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (resp.status === 201) {
+            localStorage.removeItem(CHAVE_CARRINHO);
+            window.location.href = 'historico.jsp';
+        } else if (resp.status === 401) {
+            window.location.href = 'login.html';
+        } else {
+            aviso.textContent = 'Erro ao finalizar o pedido. Tente novamente.';
+            botao.disabled = false;
+        }
+    } catch {
+        aviso.textContent = 'Falha de conexão. Tente novamente.';
+        botao.disabled = false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarItens();
+    carregarEnderecos();
+    document.getElementById('checkout').addEventListener('submit', fazerPedido);
 });

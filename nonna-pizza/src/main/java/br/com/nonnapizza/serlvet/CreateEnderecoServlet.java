@@ -49,7 +49,7 @@ public class CreateEnderecoServlet extends HttpServlet {
 
             enderecoDao.criarEndereco(endereco, cliente);
 
-            request.getRequestDispatcher("endereco.jsp").forward(request, response);
+            request.getRequestDispatcher("/enderecos").forward(request, response);
         }
 
     }

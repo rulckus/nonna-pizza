@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet("/create-produto")
 public class CreateProdutoServlet extends HttpServlet {
@@ -17,7 +18,7 @@ public class CreateProdutoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nome = request.getParameter("nome");
         String tipo = request.getParameter("tipo");
-        float valor = Float.parseFloat(request.getParameter("valor"));
+        BigDecimal valor = new BigDecimal(request.getParameter("valor"));
         String descricao = request.getParameter("descricao");
 
         Produtos produto = new Produtos();

@@ -26,7 +26,7 @@ public class ListEnderecosServlet extends HttpServlet {
             req.getRequestDispatcher("login.html").forward(req, resp);
         }else {
             List<Endereco> enderecos = new EnderecoDao().listarEnderecos(clienteLogado.getId());
-       
+
             req.setAttribute("enderecos", enderecos);
 
             req.getRequestDispatcher("endereco.jsp").forward(req, resp);

@@ -23,8 +23,8 @@
 
         <nav class="menu">
             <a href="/find-all-pizzas" class="ativo">Cardápio</a>
-            <a href="pedidos.html">Pedidos</a>
-            <a href="producao.html">Produção</a>
+            <a href="/pedidos.html">Pedidos</a>
+            <a href="/producao.html">Produção</a>
         </nav>
 
         <div class="usuario">
@@ -62,8 +62,8 @@
                         <tr>
                             <td>${pizzas.id}</td>
                             <td>${pizzas.sabor}</td>
-                            <td>
-                            </td>
+                             <td>${pizzas.descricao}</td>
+                             <td>${pizzas.valor}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

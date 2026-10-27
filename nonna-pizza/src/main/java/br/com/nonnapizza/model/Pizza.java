@@ -1,9 +1,11 @@
 package br.com.nonnapizza.model;
 
+import java.math.BigDecimal;
+
 public class Pizza {
     private String sabor;
     private String tipo;
-    private float valor;
+    private BigDecimal valor;
     private String descricao;
     private String id;
 
@@ -31,11 +33,11 @@ public class Pizza {
         this.tipo = tipo;
     }
 
-    public float getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
@@ -51,5 +53,7 @@ public class Pizza {
         return id;
     }
 
-    public void setId(String id) {}
+    public void setId(String id) {
+        this.id = id;
+    }
 }

@@ -21,9 +21,9 @@
         </a>
         <nav class="menu-topo" aria-label="Principal">
             <a href="/cardapio" aria-current="page">Cardápio</a>
-            <a href="historico.html">Meus Pedidos</a>
+            <a href="/historico">Meus Pedidos</a>
             <a href="/enderecos">Minha Conta</a>
-            <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho, 3 itens">
+            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, 3 itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class="carrinho-qtd">3</span>
             </a>
@@ -46,11 +46,17 @@
 
         <div class="grade-pizzas" id="grade">
             <c:forEach var="pizzasCardapio" items="${pizzasCardapio}">
-                <div>
-                    <h4>${pizzasCardapio.sabor}</h4>
-                    <p>${pizzasCardapio.descricao}</p>
-                    <p>${pizzasCardapio.valor} </p>
-                </div>
+                <form action="carrinho" method="post">
+                    <input type="hidden" name="acao" value="adicionar">
+                    <input type="hidden" name="tipo" value="pizza">
+                    <input type="hidden" name="id" value="${pizzasCardapio.id}">
+                    <div>
+                        <h4>${pizzasCardapio.sabor}</h4>
+                        <p>${pizzasCardapio.descricao}</p>
+                        <p>${pizzasCardapio.valor} </p>
+                    </div>
+                    <button type="submit" class="btn btn-primario">Adicionar</button>
+                </form>
             </c:forEach>
         </div>
 

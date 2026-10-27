@@ -1,6 +1,7 @@
 package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Pizza;
+import br.com.nonnapizza.model.Produtos;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
@@ -25,7 +26,7 @@ public class PizzaDao {
 
             preparedStatement.setString(1, pizza.getSabor());
             preparedStatement.setString(2, pizza.getTipo());
-            preparedStatement.setFloat(3, pizza.getValor());
+            preparedStatement.setBigDecimal(3, pizza.getValor());
             preparedStatement.setString(4, pizza.getDescricao());
             preparedStatement.setInt(5, 1);
 
@@ -55,10 +56,12 @@ public class PizzaDao {
 
             while (resultSet.next()) {
 
-                String id = resultSet.getString("id_pizza");
-                String sabores = resultSet.getString("sabor");
+                Pizza pizza = new Pizza();
 
-                Pizza pizza = new Pizza(sabores, id);
+                pizza.setId(resultSet.getString("id_pizza"));
+                pizza.setSabor(resultSet.getString("sabor"));
+                pizza.setValor(resultSet.getBigDecimal("valor"));
+                pizza.setDescricao(resultSet.getString("descricao"));
 
                 pizzas.add(pizza);
             }
@@ -116,8 +119,9 @@ public class PizzaDao {
 
                 Pizza pizza = new Pizza();
 
+                pizza.setId(resultSet.getString("id_pizza"));
                 pizza.setSabor(resultSet.getString("sabor"));
-                pizza.setValor(resultSet.getFloat("valor"));
+                pizza.setValor(resultSet.getBigDecimal("valor"));
                 pizza.setDescricao(resultSet.getString("descricao"));
 
                 pizzas.add(pizza);
@@ -158,5 +162,42 @@ public class PizzaDao {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
 
         }
+    }
+
+    public Pizza acharPizzaId(Long pizzaId) {
+
+        String SQL = "SELECT * FROM PIZZAS WHERE ID_PIZZA = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, pizzaId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            Pizza pizza = new Pizza();
+            pizza.setId(resultSet.getString("id_pizza"));
+            pizza.setSabor(resultSet.getString("sabor"));
+            pizza.setTipo(resultSet.getString("tipo"));
+            pizza.setValor(resultSet.getBigDecimal("valor"));
+            pizza.setDescricao(resultSet.getString("descricao"));
+
+
+            System.out.println("Pizza encontrada com sucesso " + pizzaId);
+
+            connection.close();
+            return pizza;
+        } catch (Exception e) {
+
+            System.out.println("Falha ao tentar localizar Pizza: " + e.getMessage());
+
+        }
+        return null;
     }
 }
