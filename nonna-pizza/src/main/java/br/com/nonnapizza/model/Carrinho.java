@@ -23,9 +23,11 @@ public class Carrinho implements Serializable {
     }
 
     public void remover(String chave) { itens.remove(chave); }
+
     public void limpar() { itens.clear(); }
 
     public Collection<CarrinhoItem> getItens() { return itens.values(); }
+
     public boolean isVazio() { return itens.isEmpty(); }
 
     public int getQuantidadeTotal() {

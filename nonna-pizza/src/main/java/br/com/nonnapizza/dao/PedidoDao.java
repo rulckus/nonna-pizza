@@ -3,6 +3,7 @@ package br.com.nonnapizza.dao;
 import br.com.nonnapizza.model.Endereco;
 import br.com.nonnapizza.model.ItemPedido;
 import br.com.nonnapizza.model.Pedido;
+import br.com.nonnapizza.model.PedidosAdm;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.*;
@@ -85,6 +86,55 @@ public class PedidoDao {
                 pedido.setId(Long.valueOf(resultSet.getString("ID_Pedido")));
                 pedido.setValor(resultSet.getBigDecimal("VALOR_TOTAL"));
                 pedido.setData((resultSet.getTimestamp("Horario").toLocalDateTime()));
+                pedido.setStatus(resultSet.getString("STATUS"));
+
+
+                pedidos.add(pedido);
+            }
+
+            System.out.println("Sucesso ao consultar Histórico de pedidos!");
+            connection.close();
+
+            return pedidos;
+        }catch (Exception e){
+            System.out.println("Erro ao listar histórico: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<PedidosAdm> listarPedidosAdm(){
+        String SQL = "SELECT p.id_pedido                                                    AS id,\n" +
+                "       c.nome                                                         AS cliente,\n" +
+                "       LISTAGG(i.quantidade || 'x ' || COALESCE(pz.sabor, pr.nome), ', ') AS produtos,\n" +
+                "       p.valor_total                                                  AS total,\n" +
+                "       p.horario                                                      AS hora,\n" +
+                "       p.status                                                       AS status\n" +
+                "FROM pedido p\n" +
+                "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
+                "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
+                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
+                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "GROUP BY p.id_pedido, c.nome, p.valor_total, p.horario, p.status\n" +
+                "ORDER BY p.horario DESC;";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<PedidosAdm> pedidos = new ArrayList<>();
+
+            while (resultSet.next()) {
+                PedidosAdm pedido = new PedidosAdm();
+
+                pedido.setId(resultSet.getString("ID"));
+                pedido.setCliente(resultSet.getString("CLIENTE"));
+                pedido.setHora((resultSet.getTimestamp("HORA").toLocalDateTime()));
+                pedido.setProdutos(resultSet.getString("PRODUTOS"));
+                pedido.setTotal(resultSet.getBigDecimal("TOTAL"));
                 pedido.setStatus(resultSet.getString("STATUS"));
 
 

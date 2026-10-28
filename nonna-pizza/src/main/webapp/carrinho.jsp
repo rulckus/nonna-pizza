@@ -26,10 +26,11 @@
         <nav class="menu-topo" aria-label="Principal">
             <a href="/cardapio">Cardápio</a>
             <a href="/historico">Meus Pedidos</a>
-            <a href="/endereco">Minha Conta</a>
-            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, 3 itens" aria-current="page">
+            <a href="/enderecos">Minha Conta</a>
+            <a href="carrinho" class="carrinho-link"
+               aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                <span class="carrinho-qtd">3</span>
+                <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
             </a>
         </nav>
     </div>
@@ -70,7 +71,7 @@
                   </c:choose>
                 </div>
 
-                <a href="cardapio.jsp" class="adicionar-itens">+ Adicionar mais itens</a>
+                <a href="/cardapio" class="adicionar-itens">+ Adicionar mais itens</a>
             </section>
 
             <aside class="resumo">
@@ -82,7 +83,7 @@
                     </div>
                 </dl>
                 <a href="/checkout" id="continuar" class="btn btn-primario btn-grande">Continuar para entrega</a>
-                <a href="cardapio.jsp" class="voltar">← Voltar ao cardápio</a>
+                <a href="/cardapio" class="voltar">← Voltar ao cardápio</a>
             </aside>
         </div>
     </div>

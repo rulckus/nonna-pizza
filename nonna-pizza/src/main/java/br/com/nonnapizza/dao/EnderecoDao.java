@@ -109,7 +109,7 @@ public class EnderecoDao {
 
     public void atualizarEndereco(Endereco endereco) {
 
-        String SQL = "UPDATE ENDERECO SET NAME = ? WHERE ID = ?";
+        String SQL = "UPDATE ENDERECO SET RUA = ?, NUMERO = ?, CIDADE = ?, COMPLEMENTO = ?, BAIRRO = ?  WHERE ID_ENDERECO = ?";
 
         try {
 
@@ -118,16 +118,20 @@ public class EnderecoDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, endereco.getRua());
-            preparedStatement.setString(2, endereco.getId());
+            preparedStatement.setString(2, endereco.getNumero());
+            preparedStatement.setString(3, endereco.getCidade());
+            preparedStatement.setString(4, endereco.getComplemento());
+            preparedStatement.setString(5, endereco.getBairro());
+            preparedStatement.setString(6, endereco.getId());
             preparedStatement.execute();
 
-            System.out.println("success in update car");
+            System.out.println("Sucesso ao atualizar Endereco");
 
             connection.close();
 
         } catch (Exception e) {
 
-            System.out.println("fail in database connection");
+            System.out.println("Falha ao atualizar Endereco");
             System.out.println("Error: " + e.getMessage());
 
         }

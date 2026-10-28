@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +22,8 @@
         </div>
 
         <nav class="menu">
-            <a href="index.jsp">Cardápio</a>
-            <a href="pedidos.html" class="ativo">Pedidos</a>
+            <a href="/find-all-pizzas">Cardápio</a>
+            <a href="/pedidos-adm" class="ativo">Pedidos</a>
             <a href="producao.html">Produção</a>
         </nav>
 
@@ -59,7 +60,20 @@
                     <th>Status</th>
                 </tr>
                 </thead>
-                <tbody id="pedidos"></tbody>
+                <tbody id="pedidos">
+                <c:forEach var="pedidos" items="${pedidos}">
+
+                    <tr>
+                        <td>${pedidos.id}</td>
+                        <td>${pedidos.cliente}</td>
+                        <td>${pedidos.produtos}</td>
+                        <td>${pedidos.total}</td>
+                        <td>${pedidos.hora}</td>
+                        <td>${pedidos.status}</td>
+                    </tr>
+
+                </c:forEach>
+                </tbody>
             </table>
         </section>
 

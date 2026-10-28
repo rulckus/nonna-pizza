@@ -18,14 +18,16 @@ public class CreatePizzaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String idPizza = request.getParameter("idPizza");
+        String idPizza = request.getParameter("id");
         String sabor = request.getParameter("sabor");
         String tipo = request.getParameter("tipo");
         String descricao = request.getParameter("descricao");
         BigDecimal valor = new BigDecimal(request.getParameter("valor"));
 
+
         Pizza pizza = new Pizza();
 
+        pizza.setId(idPizza);
         pizza.setSabor(sabor);
         pizza.setTipo(tipo);
         pizza.setValor(valor);

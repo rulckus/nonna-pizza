@@ -62,6 +62,7 @@ public class PizzaDao {
                 pizza.setSabor(resultSet.getString("sabor"));
                 pizza.setValor(resultSet.getBigDecimal("valor"));
                 pizza.setDescricao(resultSet.getString("descricao"));
+                pizza.setTipo(resultSet.getString("tipo"));
 
                 pizzas.add(pizza);
             }
@@ -139,7 +140,7 @@ public class PizzaDao {
     }
 
     public void atualizarPizza(Pizza pizza){
-        String SQL = "UPDATE PIZZAS SET SABOR = ? WHERE ID = ?";
+        String SQL = "UPDATE PIZZAS SET SABOR = ?, TIPO = ?, DESCRICAO= ?, VALOR= ? WHERE ID_PIZZA = ?";
 
         try {
 
@@ -150,7 +151,11 @@ public class PizzaDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, pizza.getSabor());
-            preparedStatement.setString(2, pizza.getId());
+            preparedStatement.setString(2, pizza.getTipo());
+            preparedStatement.setString(3, pizza.getDescricao());
+            preparedStatement.setBigDecimal(4, pizza.getValor());
+
+            preparedStatement.setString(5, pizza.getId());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao atualizar Pizza");

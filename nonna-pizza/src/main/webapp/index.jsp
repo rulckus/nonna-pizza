@@ -23,7 +23,7 @@
 
         <nav class="menu">
             <a href="/find-all-pizzas" class="ativo">Cardápio</a>
-            <a href="/pedidos.html">Pedidos</a>
+            <a href="/pedidos-adm">Pedidos</a>
             <a href="/producao.html">Produção</a>
         </nav>
 
@@ -40,11 +40,10 @@
     <main class="conteudo">
         <header class="topo">
             <h2>Gerenciar Cardapio</h2>
-            <a href="#sabor" class="btn btn-primario">+ Novo sabor</a>
+            <a href="/find-all-pizzas" class="btn btn-primario">+ Novo sabor</a>
         </header>
 
         <div class="grade">
-            <!-- ===== TABELA DE PIZZAS (preenchida por js/admin-cardapio.js) ===== -->
             <section class="card tabela-card">
                 <table>
                     <thead>
@@ -54,17 +53,24 @@
                         <th>Ingredientes</th>
                         <th>Preço</th>
                         <th>Disponível</th>
-                        <th></th>
+                        <th>Excluir</th>
                     </tr>
                     </thead>
                     <tbody id="pizzas">
                     <c:forEach var="pizzas" items="${pizzas}">
-                        <tr>
-                            <td>${pizzas.id}</td>
-                            <td>${pizzas.sabor}</td>
-                             <td>${pizzas.descricao}</td>
-                             <td>${pizzas.valor}</td>
-                        </tr>
+
+                            <tr>
+                                <td><a href="find-all-pizzas?id=${pizzas.id}&sabor=${pizzas.sabor}&descricao=${pizzas.descricao}&valor=${pizzas.valor}&tipo=${pizzas.tipo}">${pizzas.id}</a></td>
+                                <td>${pizzas.sabor}</td>
+                                <td>${pizzas.descricao}</td>
+                                <td>${pizzas.valor}</td>
+                                <td><button/>Diponivel</td>
+                                <form action="/delete-pizza" method="post">
+                                <input type="hidden" id="id" name="id" value="${pizzas.id}">
+                                <td><button type ="submit">Excluir</button></td>
+                                </form>
+                            </tr>
+
                     </c:forEach>
                     </tbody>
                 </table>
@@ -78,17 +84,19 @@
                 </div>
 
                 <form action="create-pizza" method="post">
+                    <input type="hidden" name="id" id="idPizza" value="${param.id}" required>
                     <label for="sabor">Nome</label>
-                    <input type="text" name="sabor" id="sabor" placeholder="Ex: Quatro Queijos" required>
+                    <input type="text" name="sabor" id="sabor" placeholder="Ex: Quatro Queijos" value="${param.sabor}" required>
 
                     <label for="tipo">Tipo</label>
-                    <input type="text" name="tipo" id="tipo" placeholder="Ex: Salgada" required>
+                    <input type="text" name="tipo" id="tipo" placeholder="Ex: Salgada" value="${param.tipo}" required>
 
                     <label for="descricao">Ingredientes</label>
-                    <textarea name="descricao" id="descricao" rows="3" placeholder="Ex: Molho, mussarela, tomate, manjericão" required></textarea>
+                    <textarea name="descricao" id="descricao" value="${param.descricao}" rows="3" placeholder="Ex: Molho, mussarela, tomate, manjericão" required></textarea>
 
                     <label for="valor">Preço (R$)</label>
-                    <input type="number" name="valor" id="valor" step="0.01" min="0.01" placeholder="Ex: 49.90" required>
+                    <input type="number" name="valor" id="valor" step="0.01" min="0.01" placeholder="Ex: 49.90" value="${param.valor}" required>
+
 
                     <button type="submit" class="btn btn-primario">Salvar sabor</button>
                 </form>

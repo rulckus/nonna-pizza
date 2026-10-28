@@ -25,7 +25,6 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         List<Endereco> enderecos = new EnderecoDao().listarEnderecos(cliente.getId());
-        System.out.println("Enderecos: " + enderecos.size());
         req.setAttribute("enderecos", enderecos);
         req.getRequestDispatcher("checkout.jsp").forward(req, resp);
     }

@@ -28,6 +28,7 @@ public class CreateEnderecoServlet extends HttpServlet {
 
         Endereco endereco = new Endereco();
 
+        endereco.setId(id);
         endereco.setRua(ruaNome);
         endereco.setNumero(numero);
         endereco.setComplemento(complemento);
@@ -37,19 +38,19 @@ public class CreateEnderecoServlet extends HttpServlet {
         Cliente cliente = (Cliente) request.getSession().getAttribute("loggeduser");
 
         if (cliente == null) {
-            request.getRequestDispatcher("login.html").forward(request, response);
+            response.sendRedirect("/login.html");
         }else {
             EnderecoDao enderecoDao = new EnderecoDao();
 
-    //        if (id.isBlank()){
-    //            enderecoDao.criarEndereco(endereco);
-    //        }else {
-    //            enderecoDao.atualizarEndereco(endereco);
-    //        }
+            if (id.isBlank()){
+                enderecoDao.criarEndereco(endereco, cliente);
+            }else {
+                enderecoDao.atualizarEndereco(endereco);
+            }
 
-            enderecoDao.criarEndereco(endereco, cliente);
+//            enderecoDao.criarEndereco(endereco, cliente);
 
-            request.getRequestDispatcher("/enderecos").forward(request, response);
+            response.sendRedirect("/enderecos");
         }
 
     }
