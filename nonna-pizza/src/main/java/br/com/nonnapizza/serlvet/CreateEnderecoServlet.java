@@ -48,7 +48,6 @@ public class CreateEnderecoServlet extends HttpServlet {
                 enderecoDao.atualizarEndereco(endereco);
             }
 
-//            enderecoDao.criarEndereco(endereco, cliente);
 
             response.sendRedirect("/enderecos");
         }

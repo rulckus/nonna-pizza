@@ -1,15 +1,11 @@
 package br.com.nonnapizza.dao;
 
-import br.com.nonnapizza.model.Endereco;
-import br.com.nonnapizza.model.ItemPedido;
-import br.com.nonnapizza.model.Pedido;
-import br.com.nonnapizza.model.PedidosAdm;
+import br.com.nonnapizza.model.*;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class PedidoDao {
 
@@ -151,4 +147,330 @@ public class PedidoDao {
 
         return Collections.emptyList();
     }
+
+    public void atualizarPedidoPreparando(String id){
+        String SQL = "UPDATE PEDIDO SET STATUS = 'PREPARANDO' WHERE ID_PEDIDO = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pedido");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
+    }
+
+    public void atualizarPedidoAssando(String id){
+        String SQL = "UPDATE PEDIDO SET STATUS = 'ASSANDO' WHERE ID_PEDIDO = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pedido");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
+    }
+
+    public void atualizarPedidoPronto(String id){
+        String SQL = "UPDATE PEDIDO SET STATUS = 'PRONTO' WHERE ID_PEDIDO = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pedido");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
+    }
+
+    public void atualizarPedidoFinalizado(String id){
+        String SQL = "UPDATE PEDIDO SET STATUS = 'FINALIZADO' WHERE ID_PEDIDO = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, id);
+
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pedido");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
+    }
+
+    public List<PedidoCard> listarPedidosProducaoRecebidos(){
+        String SQL = "SELECT p.id_pedido,\n" +
+                "       p.horario,\n" +
+                "       p.status,\n" +
+                "       c.nome                          AS cliente,\n" +
+                "       i.quantidade,\n" +
+                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "FROM pedido p\n" +
+                "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
+                "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
+                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
+                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "WHERE p.status = 'RECEBIDO'\n" +
+                "ORDER BY p.horario ASC, p.id_pedido;";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<String, PedidoCard> cards = new LinkedHashMap<>();   // mantém a ordem do ORDER BY
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_pedido");
+
+                PedidoCard card = cards.get(id);
+                if (card == null) {
+                    card = new PedidoCard();
+                    card.setId(id);
+                    card.setHora(resultSet.getObject("horario", LocalDateTime.class));
+                    card.setStatus(resultSet.getString("status"));
+                    card.setCliente(abreviarNome(resultSet.getString("cliente")));
+                    cards.put(id, card);
+                }
+
+
+                card.getItens().add(resultSet.getInt("quantidade") + "× " + resultSet.getString("nome_item"));
+            }
+
+            return new ArrayList<>(cards.values());
+        }catch (Exception e){
+            System.out.println("Erro ao listar histórico: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<PedidoCard> listarPedidosProducaoPreparando(){
+        String SQL = "SELECT p.id_pedido,\n" +
+                "       p.horario,\n" +
+                "       p.status,\n" +
+                "       c.nome                          AS cliente,\n" +
+                "       i.quantidade,\n" +
+                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "FROM pedido p\n" +
+                "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
+                "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
+                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
+                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "WHERE p.status = 'PREPARANDO'\n" +
+                "ORDER BY p.horario ASC, p.id_pedido;";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<String, PedidoCard> cards = new LinkedHashMap<>();   // mantém a ordem do ORDER BY
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_pedido");
+
+                PedidoCard card = cards.get(id);
+                if (card == null) {
+                    card = new PedidoCard();
+                    card.setId(id);
+                    card.setHora(resultSet.getObject("horario", LocalDateTime.class));
+                    card.setStatus(resultSet.getString("status"));
+                    card.setCliente(abreviarNome(resultSet.getString("cliente")));
+                    cards.put(id, card);
+                }
+
+
+                card.getItens().add(resultSet.getInt("quantidade") + "× " + resultSet.getString("nome_item"));
+            }
+
+
+
+            return new ArrayList<>(cards.values());
+        }catch (Exception e){
+            System.out.println("Erro ao listar histórico: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<PedidoCard> listarPedidosProducaoAssando(){
+        String SQL = "SELECT p.id_pedido,\n" +
+                "       p.horario,\n" +
+                "       p.status,\n" +
+                "       c.nome                          AS cliente,\n" +
+                "       i.quantidade,\n" +
+                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "FROM pedido p\n" +
+                "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
+                "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
+                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
+                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "WHERE p.status = 'ASSANDO'\n" +
+                "ORDER BY p.horario ASC, p.id_pedido;";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<String, PedidoCard> cards = new LinkedHashMap<>();   // mantém a ordem do ORDER BY
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_pedido");
+
+                PedidoCard card = cards.get(id);
+                if (card == null) {
+                    card = new PedidoCard();
+                    card.setId(id);
+                    card.setHora(resultSet.getObject("horario", LocalDateTime.class));
+                    card.setStatus(resultSet.getString("status"));
+                    card.setCliente(abreviarNome(resultSet.getString("cliente")));
+                    cards.put(id, card);
+                }
+
+
+
+                card.getItens().add(resultSet.getInt("quantidade") + "× " + resultSet.getString("nome_item"));
+            }
+
+            return new ArrayList<>(cards.values());
+        }catch (Exception e){
+            System.out.println("Erro ao listar histórico: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<PedidoCard> listarPedidosProducaoPronto(){
+        String SQL = "SELECT p.id_pedido,\n" +
+                "       p.horario,\n" +
+                "       p.status,\n" +
+                "       c.nome                          AS cliente,\n" +
+                "       i.quantidade,\n" +
+                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "FROM pedido p\n" +
+                "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
+                "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
+                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
+                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "WHERE p.status = 'PRONTO'\n" +
+                "ORDER BY p.horario ASC, p.id_pedido;";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<String, PedidoCard> cards = new LinkedHashMap<>();   // mantém a ordem do ORDER BY
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_pedido");
+
+                PedidoCard card = cards.get(id);
+                if (card == null) {
+                    card = new PedidoCard();
+                    card.setId(id);
+                    card.setHora(resultSet.getObject("horario", LocalDateTime.class));
+                    card.setStatus(resultSet.getString("status"));
+                    card.setCliente(abreviarNome(resultSet.getString("cliente")));
+                    cards.put(id, card);
+                }
+
+                card.getItens().add(resultSet.getInt("quantidade") + "× " + resultSet.getString("nome_item"));
+            }
+
+            return new ArrayList<>(cards.values());
+        }catch (Exception e){
+            System.out.println("Erro ao listar histórico: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
+    }
+
+    private String abreviarNome(String nomeCompleto) {
+        String[] partes = nomeCompleto.trim().split("\\s+");
+        if (partes.length == 1) return partes[0];
+        return partes[0] + " " + partes[partes.length - 1].charAt(0) + ".";
+    }
+
+    public String verificarStatus(String id){
+        String SQL = "SELECT STATUS FROM PEDIDO WHERE ID_PEDIDO = ?";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                return resultSet.getString("status");
+            }
+
+        }catch (Exception e){
+            System.out.println("Erro ao verificar pedido: " + e.getMessage());
+        }
+        return "";
+    }
+
+
+
+
 }

@@ -146,8 +146,6 @@ public class PizzaDao {
 
             Connection connection = ConnectionPoolConfig.getConnection();
 
-            System.out.println("success in database connection");
-
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, pizza.getSabor());
@@ -176,7 +174,6 @@ public class PizzaDao {
         try {
 
             Connection connection = ConnectionPoolConfig.getConnection();
-
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setLong(1, pizzaId);
