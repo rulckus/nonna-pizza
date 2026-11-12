@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -24,14 +25,14 @@
         <nav class="menu">
             <a href="/find-all-pizzas">Cardápio</a>
             <a href="/pedidos-adm">Pedidos</a>
-            <a href="producao.html" class="ativo">Produção</a>
+            <a href="/producao" class="ativo">Produção</a>
         </nav>
 
         <div class="usuario">
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="logout">Sair</a>
+                <a href="/logout">Sair</a>
             </div>
         </div>
     </aside>
@@ -53,20 +54,20 @@
                 <h3 class="coluna-topo">Recebido <span class="contador">${tamanhoRecebidos}</span></h3>
                 <div class="lista">
                     <c:forEach var="pedidosRecebidos" items="${pedidosRecebidos}">
-                        <article class="card-pedido">
-                            <header>
-                                <strong>#${pedidosRecebidos.id}</strong>
-                                <span>${pedidosRecebidos.hora}</span>
-                            </header>
-                            <p><c:out value="${pedidosRecebidos.cliente}"/></p>
-                            <ul>
+                        <article class="pedido-card">
+                            <div class="pedido-cabecalho">
+                                <span>#${pedidosRecebidos.id}</span>
+                                <span class="pedido-hora">${pedidosRecebidos.hora}</span>
+                            </div>
+                            <p class="pedido-cliente"><c:out value="${pedidosRecebidos.cliente}"/></p>
+                            <ul class="pedido-itens">
                                 <c:forEach var="item" items="${pedidosRecebidos.itens}">
                                     <li><c:out value="${item}"/></li>
                                 </c:forEach>
                             </ul>
-                            <form action="atualizar-status" method="post">
+                            <form action="/atualizar-status" method="post">
                                 <input type="hidden" name="id" value="${pedidosRecebidos.id}">
-                                <button type="submit">→ Avançar</button>
+                                <button type="submit" class="btn btn-avancar">→ Avançar</button>
                             </form>
                         </article>
                     </c:forEach>
@@ -77,20 +78,20 @@
                 <h3 class="coluna-topo">Preparando <span class="contador">${tamanhoPreparando}</span></h3>
                 <div class="lista">
                     <c:forEach var="pedidosPreparando" items="${pedidosPreparando}">
-                        <article class="card-pedido">
-                            <header>
-                                <strong>#${pedidosPreparando.id}</strong>
-                                <span>${pedidosPreparando.hora}</span>
-                            </header>
-                            <p><c:out value="${pedidosPreparando.cliente}"/></p>
-                            <ul>
+                        <article class="pedido-card">
+                            <div class="pedido-cabecalho">
+                                <span>#${pedidosPreparando.id}</span>
+                                <span class="pedido-hora">${pedidosPreparando.hora}</span>
+                            </div>
+                            <p class="pedido-cliente"><c:out value="${pedidosPreparando.cliente}"/></p>
+                            <ul class="pedido-itens">
                                 <c:forEach var="item" items="${pedidosPreparando.itens}">
                                     <li><c:out value="${item}"/></li>
                                 </c:forEach>
                             </ul>
-                            <form action="atualizar-status" method="post">
+                            <form action="/atualizar-status" method="post">
                                 <input type="hidden" name="id" value="${pedidosPreparando.id}">
-                                <button type="submit">→ Avançar</button>
+                                <button type="submit" class="btn btn-avancar">→ Avançar</button>
                             </form>
                         </article>
                     </c:forEach>
@@ -101,20 +102,20 @@
                 <h3 class="coluna-topo">Assando <span class="contador">${tamanhoAssando}</span></h3>
                 <div class="lista">
                     <c:forEach var="pedidosAssando" items="${pedidosAssando}">
-                        <article class="card-pedido">
-                            <header>
-                                <strong>#${pedidosAssando.id}</strong>
-                                <span>${pedidosAssando.hora}</span>
-                            </header>
-                            <p><c:out value="${pedidosAssando.cliente}"/></p>
-                            <ul>
+                        <article class="pedido-card">
+                            <div class="pedido-cabecalho">
+                                <span>#${pedidosAssando.id}</span>
+                                <span class="pedido-hora">${pedidosAssando.hora}</span>
+                            </div>
+                            <p class="pedido-cliente"><c:out value="${pedidosAssando.cliente}"/></p>
+                            <ul class="pedido-itens">
                                 <c:forEach var="item" items="${pedidosAssando.itens}">
                                     <li><c:out value="${item}"/></li>
                                 </c:forEach>
                             </ul>
-                            <form action="atualizar-status" method="post">
+                            <form action="/atualizar-status" method="post">
                                 <input type="hidden" name="id" value="${pedidosAssando.id}">
-                                <button type="submit">→ Avançar</button>
+                                <button type="submit" class="btn btn-avancar">→ Avançar</button>
                             </form>
                         </article>
                     </c:forEach>
@@ -125,20 +126,20 @@
                 <h3 class="coluna-topo">Pronto para entrega <span class="contador">${tamanhoPronto}</span></h3>
                 <div class="lista">
                     <c:forEach var="pedidosPronto" items="${pedidosPronto}">
-                        <article class="card-pedido">
-                            <header>
-                                <strong>#${pedidosPronto.id}</strong>
-                                <span>${pedidosPronto.hora}</span>
-                            </header>
-                            <p><c:out value="${pedidosPronto.cliente}"/></p>
-                            <ul>
+                        <article class="pedido-card">
+                            <div class="pedido-cabecalho">
+                                <span>#${pedidosPronto.id}</span>
+                                <span class="pedido-hora">${pedidosPronto.hora}</span>
+                            </div>
+                            <p class="pedido-cliente"><c:out value="${pedidosPronto.cliente}"/></p>
+                            <ul class="pedido-itens">
                                 <c:forEach var="item" items="${pedidosPronto.itens}">
                                     <li><c:out value="${item}"/></li>
                                 </c:forEach>
                             </ul>
-                            <form action="atualizar-status" method="post">
+                            <form action="/atualizar-status" method="post">
                                 <input type="hidden" name="id" value="${pedidosPronto.id}">
-                                <button type="submit">Finalizar</button>
+                                <button type="submit" class="btn btn-avancar">Finalizar</button>
                             </form>
                         </article>
                     </c:forEach>

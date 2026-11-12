@@ -1,6 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <head>
     <meta charset="UTF-8">
@@ -23,8 +25,8 @@
         <nav class="menu-topo" aria-label="Principal">
             <a href="/cardapio">Cardápio</a>
             <a href="/historico">Meus Pedidos</a>
-            <a href="/endereco">Minha Conta</a>
-            <a href="carrinho" class="carrinho-link"
+            <a href="/enderecos">Minha Conta</a>
+            <a href="/carrinho" class="carrinho-link"
                aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
                  <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
@@ -37,7 +39,7 @@
     <div class="container">
         <h1 class="titulo-pagina">Finalizar pedido</h1>
 
-        <form action="pedido" method="post" class="duas-colunas duas-colunas--checkout">
+        <form action="/pedido" method="post" class="duas-colunas duas-colunas--checkout">
             <div>
                 <section class="bloco">
                     <h2>Itens do pedido</h2>
@@ -57,7 +59,7 @@
                         <a href="/enderecos">Cadastrar/alterar</a>
                     </div>
                     <select name="endereco" id="endereco" required>
-                            <option>Selecione um endereco</option>
+                            <option value="" disabled selected>Selecione um endereço</option>
                         <c:forEach var="e" items="${enderecos}">
                             <option value="${e.id}">
                                 <c:out value="${e.rua}, ${e.numero} - ${e.bairro}, ${e.cidade}"/>

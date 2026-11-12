@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -24,14 +25,14 @@
         <nav class="menu">
             <a href="/find-all-pizzas" class="ativo">Cardápio</a>
             <a href="/pedidos-adm">Pedidos</a>
-            <a href="/producao.html">Produção</a>
+            <a href="/producao">Produção</a>
         </nav>
 
         <div class="usuario">
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="landing.html">Sair</a>
+                <a href="/logout">Sair</a>
             </div>
         </div>
     </aside>
@@ -39,7 +40,7 @@
     <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="conteudo">
         <header class="topo">
-            <h2>Gerenciar Cardapio</h2>
+            <h2>Gerenciar Cardápio</h2>
             <a href="/find-all-pizzas" class="btn btn-primario">+ Novo sabor</a>
         </header>
 
@@ -57,21 +58,32 @@
                     </tr>
                     </thead>
                     <tbody id="pizzas">
-                    <c:forEach var="pizzas" items="${pizzas}">
-
-                            <tr>
-                                <td><a href="find-all-pizzas?id=${pizzas.id}&sabor=${pizzas.sabor}&descricao=${pizzas.descricao}&valor=${pizzas.valor}&tipo=${pizzas.tipo}">${pizzas.id}</a></td>
-                                <td>${pizzas.sabor}</td>
-                                <td>${pizzas.descricao}</td>
-                                <td>${pizzas.valor}</td>
-                                <td><button/>Diponivel</td>
+                    <c:forEach var="pizza" items="${pizzas}">
+                        <%-- c:url codifica acentos e & dos parâmetros --%>
+                        <c:url var="urlEditar" value="/find-all-pizzas">
+                            <c:param name="id" value="${pizza.id}"/>
+                            <c:param name="sabor" value="${pizza.sabor}"/>
+                            <c:param name="descricao" value="${pizza.descricao}"/>
+                            <c:param name="valor" value="${pizza.valor}"/>
+                            <c:param name="tipo" value="${pizza.tipo}"/>
+                        </c:url>
+                        <tr>
+                            <td><a href="${urlEditar}">${pizza.id}</a></td>
+                            <td><c:out value="${pizza.sabor}"/></td>
+                            <td><c:out value="${pizza.descricao}"/></td>
+                            <td>${pizza.valor}</td>
+                            <td>Disponível</td>
+                            <td>
                                 <form action="/delete-pizza" method="post">
-                                <input type="hidden" id="id" name="id" value="${pizzas.id}">
-                                <td><button type ="submit">Excluir</button></td>
+                                    <input type="hidden" name="id" value="${pizza.id}">
+                                    <button type="submit">Excluir</button>
                                 </form>
-                            </tr>
-
+                            </td>
+                        </tr>
                     </c:forEach>
+                    <c:if test="${empty pizzas}">
+                        <tr><td colspan="6" class="estado-vazio">Nenhuma pizza cadastrada.</td></tr>
+                    </c:if>
                     </tbody>
                 </table>
             </section>
@@ -83,16 +95,16 @@
                     <span class="tag">Cadastro</span>
                 </div>
 
-                <form action="create-pizza" method="post">
-                    <input type="hidden" name="id" id="idPizza" value="${param.id}" required>
+                <form action="/create-pizza" method="post">
+                    <input type="hidden" name="id" id="idPizza" value="${param.id}">
                     <label for="sabor">Nome</label>
-                    <input type="text" name="sabor" id="sabor" placeholder="Ex: Quatro Queijos" value="${param.sabor}" required>
+                    <input type="text" name="sabor" id="sabor" placeholder="Ex: Quatro Queijos" value="<c:out value="${param.sabor}"/>" required>
 
                     <label for="tipo">Tipo</label>
-                    <input type="text" name="tipo" id="tipo" placeholder="Ex: Salgada" value="${param.tipo}" required>
+                    <input type="text" name="tipo" id="tipo" placeholder="Ex: Salgada" value="<c:out value="${param.tipo}"/>" required>
 
                     <label for="descricao">Ingredientes</label>
-                    <textarea name="descricao" id="descricao" value="${param.descricao}" rows="3" placeholder="Ex: Molho, mussarela, tomate, manjericão" required></textarea>
+                    <textarea name="descricao" id="descricao" rows="3" placeholder="Ex: Molho, mussarela, tomate, manjericão" required><c:out value="${param.descricao}"/></textarea>
 
                     <label for="valor">Preço (R$)</label>
                     <input type="number" name="valor" id="valor" step="0.01" min="0.01" placeholder="Ex: 49.90" value="${param.valor}" required>

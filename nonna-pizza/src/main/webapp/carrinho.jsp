@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:fmt="">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -27,7 +33,7 @@
             <a href="/cardapio">Cardápio</a>
             <a href="/historico">Meus Pedidos</a>
             <a href="/enderecos">Minha Conta</a>
-            <a href="carrinho" class="carrinho-link"
+            <a href="/carrinho" class="carrinho-link"
                aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
@@ -45,17 +51,20 @@
                 <div class="lista-carrinho">
                   <c:choose>
                     <c:when test="${empty carrinho or carrinho.vazio}">
-                        <p>Seu carrinho está vazio.</p>
+                        <p class="estado-vazio">Seu carrinho está vazio.</p>
                     </c:when>
                     <c:otherwise>
                       <c:forEach var="item" items="${carrinho.itens}">
                         <article class="item-carrinho">
+                            <c:if test="${not empty item.foto}">
+                                <img src="${item.foto}" alt="">
+                            </c:if>
                             <div class="item-info">
                                 <h3><c:out value="${item.nome}"/></h3>
                                 <span><fmt:formatNumber value="${item.preco}" type="currency"/></span>
                             </div>
 
-                            <form action="carrinho" method="post" class="item-quantidade">
+                            <form action="/carrinho" method="post" class="item-quantidade">
                                 <input type="hidden" name="tipo" value="${item.tipo}">
                                 <input type="hidden" name="id" value="${item.id}">
                                 <button name="acao" value="menos" aria-label="Diminuir">−</button>

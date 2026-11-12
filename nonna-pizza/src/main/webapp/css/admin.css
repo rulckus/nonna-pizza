@@ -508,3 +508,10 @@ form textarea:focus {
 .painel button[type="submit"] {
     margin-top: 14px;
 }
+
+.estado-vazio {
+    padding: 24px;
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 13px;
+}

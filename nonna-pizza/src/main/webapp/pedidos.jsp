@@ -1,6 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,14 +27,14 @@
         <nav class="menu">
             <a href="/find-all-pizzas">Cardápio</a>
             <a href="/pedidos-adm" class="ativo">Pedidos</a>
-            <a href="producao.html">Produção</a>
+            <a href="/producao">Produção</a>
         </nav>
 
         <div class="usuario">
             <div class="avatar">A</div>
             <div>
                 <strong>Admin</strong>
-                <a href="logout">Sair</a>
+                <a href="/logout">Sair</a>
             </div>
         </div>
     </aside>
@@ -61,18 +64,21 @@
                 </tr>
                 </thead>
                 <tbody id="pedidos">
-                <c:forEach var="pedidos" items="${pedidos}">
-
+                <c:forEach var="pedido" items="${pedidos}">
                     <tr>
-                        <td>${pedidos.id}</td>
-                        <td>${pedidos.cliente}</td>
-                        <td>${pedidos.produtos}</td>
-                        <td>${pedidos.total}</td>
-                        <td>${pedidos.hora}</td>
-                        <td>${pedidos.status}</td>
+                        <td>#${pedido.id}</td>
+                        <td class="cliente"><c:out value="${pedido.cliente}"/></td>
+                        <td class="ingredientes"><c:out value="${pedido.produtos}"/></td>
+                        <td class="total"><fmt:formatNumber value="${pedido.total}" type="currency"/></td>
+                        <td>${pedido.hora}</td>
+                        <td>
+                            <span class="status status-${fn:toLowerCase(pedido.status)}"><c:out value="${pedido.status}"/></span>
+                        </td>
                     </tr>
-
                 </c:forEach>
+                <c:if test="${empty pedidos}">
+                    <tr><td colspan="6" class="estado-vazio">Nenhum pedido recebido ainda.</td></tr>
+                </c:if>
                 </tbody>
             </table>
         </section>

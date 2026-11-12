@@ -1,6 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,9 +26,9 @@
             <a href="/cardapio">Cardápio</a>
             <a href="/historico" aria-current="page">Meus Pedidos</a>
             <a href="/enderecos">Minha Conta</a>
-            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, 3 itens">
+            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                <span class="carrinho-qtd">3</span>
+                <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
             </a>
         </nav>
     </div>
@@ -36,17 +39,31 @@
         <h1 class="titulo-pagina titulo-italico">Histórico de Pedidos</h1>
 
         <ul class="lista-pedidos" id="pedidos">
-            <c:forEach var="item" items="${pedidos}">
-                <tr>
-                    <td>${item.id}</td>
-                    <td>${item.valor}</td>
-                    <td>${item.data}</td>
-                    <td>${item.status}</td>
-                    <td>
-                    </td>
-                </tr>
-                <br/>
+            <c:forEach var="pedido" items="${pedidos}">
+                <%-- data vem como 2026-10-29T18:30:12: separa dia, mês, ano e hora --%>
+                <c:set var="d" value="${pedido.data}"/>
+                <li class="pedido">
+                    <div class="pedido-numero">
+                        #${pedido.id}
+                        <time>${fn:substring(d,8,10)}/${fn:substring(d,5,7)}/${fn:substring(d,0,4)} ${fn:substring(d,11,16)}</time>
+                    </div>
+                    <span></span>
+                    <span class="pedido-total"><fmt:formatNumber value="${pedido.valor}" type="currency"/></span>
+                    <span class="selo selo-${fn:toLowerCase(pedido.status)}">
+                        <c:choose>
+                            <c:when test="${pedido.status == 'RECEBIDO'}">Recebido</c:when>
+                            <c:when test="${pedido.status == 'PREPARANDO'}">Preparando</c:when>
+                            <c:when test="${pedido.status == 'ASSANDO'}">Assando</c:when>
+                            <c:when test="${pedido.status == 'PRONTO'}">Pronto</c:when>
+                            <c:when test="${pedido.status == 'ENTREGUE' or pedido.status == 'FINALIZADO'}">Entregue</c:when>
+                            <c:otherwise><c:out value="${pedido.status}"/></c:otherwise>
+                        </c:choose>
+                    </span>
+                </li>
             </c:forEach>
+            <c:if test="${empty pedidos}">
+                <li class="estado-vazio">Você ainda não fez nenhum pedido.</li>
+            </c:if>
         </ul>
     </div>
 </main>
