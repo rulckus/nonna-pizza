@@ -6,12 +6,13 @@ import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.Date;
 
 public class PedidoDao {
 
     public Long salvarPedido(Pedido pedido) throws SQLException {
-        String sqlPedido = "INSERT INTO pedido (id_cliente, id_endereco, id_pagamento, status, valor_total) "
-                + "VALUES (?, ?, ?, ?, ?)";
+        String sqlPedido = "INSERT INTO pedido (id_cliente, id_endereco, id_pagamento, status, valor_total, horario) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
 
         String sqlItem = "INSERT INTO itens_pedido (id_pedido, id_pizza, id_produto, quantidade, preco_unitario) "
                 + "VALUES (?, ?, ?, ?, ?)";

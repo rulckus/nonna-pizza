@@ -72,7 +72,12 @@
                             <td><c:out value="${pizza.sabor}"/></td>
                             <td><c:out value="${pizza.descricao}"/></td>
                             <td>${pizza.valor}</td>
-                            <td>Disponível</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span></span>
+                                </label>
+                            </td>
                             <td>
                                 <form action="/delete-pizza" method="post">
                                     <input type="hidden" name="id" value="${pizza.id}">
@@ -117,7 +122,7 @@
     </main>
 </div>
 
-<script src="js/app.js"></script>
-<script src="js/admin-cardapio.js"></script>
+
+
 </body>
 </html>

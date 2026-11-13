@@ -86,8 +86,5 @@
     </main>
 </div>
 
-<script src="js/app.js"></script>
-<script src="js/admin-pedidos.js"></script>
-<script src="js/filtro.js"></script>
 </body>
 </html>

@@ -169,7 +169,12 @@ td {
 }
 
 .switch input {
-    display: none; /* esconde o checkbox original */
+    position: absolute; /* esconde só visualmente: continua acessível pelo teclado (Tab + Espaço) */
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
 }
 
 .switch span {
@@ -199,6 +204,25 @@ td {
 
 .switch input:checked + span::before {
     transform: translateX(15px);
+}
+
+/* anel de foco ao navegar com Tab */
+.switch input:focus-visible + span {
+    outline: 2px solid var(--vinho);
+    outline-offset: 2px;
+}
+
+/* desligado = bolinha com sombra leve para dar contraste com o fundo bege */
+.switch input:not(:checked) + span::before {
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* switch travado (ex.: enquanto não está ligado ao banco) */
+.switch input:disabled,
+.switch input:disabled + span {
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 /* ===== PAINEL DO FORMULÁRIO ===== */
@@ -515,3 +539,24 @@ form textarea:focus {
     color: var(--texto-suave);
     font-size: 13px;
 }
+
+/* ===== Cardápio (index.jsp): estilo sem mexer no HTML ===== */
+.tabela-card td:nth-child(1) a { color: var(--vinho); font-weight: 700; }             /* ID (link de editar) */
+.tabela-card td:nth-child(2)   { font-size: 12px; font-weight: 700; }                 /* Pizza */
+.tabela-card td:nth-child(3)   { font-size: 10px; color: var(--texto-suave); }        /* Ingredientes */
+.tabela-card td:nth-child(4)   { font-size: 12px; font-weight: 700; white-space: nowrap; } /* Preço */
+.tabela-card td:nth-child(4)::before { content: "R$ "; }
+.tabela-card td:nth-child(5)   { font-size: 10px; font-weight: 700; color: #047857; } /* Disponível */
+
+.tabela-card td form { display: block; }                                              /* anula o form{display:flex} global */
+.tabela-card td button {                                                              /* Excluir */
+    padding: 4px 10px;
+    font: inherit;
+    font-size: 11px;
+    color: #b8333f;
+    background: none;
+    border: 1px solid #b8333f;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.tabela-card td button:hover { background: #b8333f; color: white; }

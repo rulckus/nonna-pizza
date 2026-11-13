@@ -144,7 +144,7 @@
     </div>
 </footer>
 
-<script src="js/app.js"></script>
+
 <script src="js/endereco.js"></script>
 </body>
 </html>

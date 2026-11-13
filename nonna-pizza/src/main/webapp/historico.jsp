@@ -82,7 +82,6 @@
     </div>
 </footer>
 
-<script src="js/app.js"></script>
-<script src="js/historico.js"></script>
+
 </body>
 </html>

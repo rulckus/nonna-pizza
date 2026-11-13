@@ -86,7 +86,7 @@
     </div>
 </footer>
 
-<script src="js/app.js"></script>
-<script src="js/filtro.js"></script>
+
+
 </body>
 </html>

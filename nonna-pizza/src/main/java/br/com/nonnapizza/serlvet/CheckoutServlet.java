@@ -17,6 +17,9 @@ public class CheckoutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.printf("passou no checkout");
+
         Cliente cliente = (Cliente) req.getSession().getAttribute("loggeduser");
 
         if (cliente == null) {
