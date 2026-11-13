@@ -68,9 +68,9 @@
                     <tr>
                         <td>#${pedido.id}</td>
                         <td class="cliente"><c:out value="${pedido.cliente}"/></td>
-                        <td class="ingredientes"><c:out value="${pedido.produtos}"/></td>
+                        <td class="ingredientes"><c:out value="${pedido.pizzas}"/></td>
                         <td class="total"><fmt:formatNumber value="${pedido.total}" type="currency"/></td>
-                        <td>${pedido.hora}</td>
+                        <td>${pedido.horaFormatada}</td>
                         <td>
                             <span class="status status-${fn:toLowerCase(pedido.status)}"><c:out value="${pedido.status}"/></span>
                         </td>

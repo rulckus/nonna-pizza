@@ -1,9 +1,8 @@
 package br.com.nonnapizza.serlvet;
 
 import br.com.nonnapizza.dao.PedidoDao;
-import br.com.nonnapizza.dao.ProdutosDao;
 import br.com.nonnapizza.model.PedidosAdm;
-import br.com.nonnapizza.model.Produtos;
+import br.com.nonnapizza.model.Pizzaiolo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +17,12 @@ public class ListPedidosAdmServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Pizzaiolo pizzaioloLogado = (Pizzaiolo) req.getSession().getAttribute("loggedAdm");
+
+        if (pizzaioloLogado == null) {
+            req.getRequestDispatcher("/landing.html").forward(req, resp);
+        }
 
         List<PedidosAdm> pedidos = new PedidoDao().listarPedidosAdm();
 

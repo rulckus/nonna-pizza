@@ -1,7 +1,6 @@
 package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Pizza;
-import br.com.nonnapizza.model.Produtos;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
@@ -201,5 +200,30 @@ public class PizzaDao {
 
         }
         return null;
+    }
+
+    public void atualizarPizzaDisponibilidade(Pizza pizza, int disponibilidade){
+        String SQL = "UPDATE PIZZAS SET DISPONIBILIDADE = ? WHERE ID_PIZZA = ?";
+
+        try {
+
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1, disponibilidade);
+            preparedStatement.setString(2, pizza.getId());
+
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar Pizza");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+
+        }
     }
 }

@@ -1,11 +1,9 @@
 package br.com.nonnapizza.serlvet;
 
 import br.com.nonnapizza.dao.PizzaDao;
-import br.com.nonnapizza.dao.ProdutosDao;
 import br.com.nonnapizza.model.Carrinho;
 import br.com.nonnapizza.model.CarrinhoItem;
 import br.com.nonnapizza.model.Pizza;
-import br.com.nonnapizza.model.Produtos;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,12 +66,8 @@ public class CarrinhoServlet extends HttpServlet {
             if (p == null) return null;
             item.setNome(p.getSabor());
             item.setPreco(p.getValor());
-        } else if ("produto".equals(tipo)) {
-            Produtos p = new ProdutosDao().acharProdutoId(id);
-            if (p == null) return null;
-            item.setNome(p.getNome());
-            item.setPreco(p.getValor());
-        } else {
+        }
+         else {
             return null;
         }
         return item;

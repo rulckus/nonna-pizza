@@ -2,11 +2,12 @@ package br.com.nonnapizza.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PedidosAdm {
     private String id;
     private String cliente;
-    private String produtos;
+    private String pizzas;
     private BigDecimal total;
     private LocalDateTime hora;
     private String status;
@@ -43,19 +44,23 @@ public class PedidosAdm {
         this.total = total;
     }
 
-    public String getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(String produtos) {
-        this.produtos = produtos;
-    }
-
     public String getCliente() {
         return cliente;
     }
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+    public String getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(String pizzas) {
+        this.pizzas = pizzas;
+    }
+
+    public String getHoraFormatada() {
+        return hora == null ? "" : hora.format(DateTimeFormatter.ofPattern("dd/MM HH:mm"));
     }
 }

@@ -1,7 +1,10 @@
 package br.com.nonnapizza.serlvet;
 
 import br.com.nonnapizza.dao.ClienteDao;
+import br.com.nonnapizza.dao.PizzaDao;
+import br.com.nonnapizza.dao.PizzaioloDao;
 import br.com.nonnapizza.model.Cliente;
+import br.com.nonnapizza.model.Pizzaiolo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,22 +27,47 @@ public class LoginServlet extends HttpServlet {
         String senha = req.getParameter("senha");
 
         Cliente cliente = new Cliente(email, senha);
+        Pizzaiolo pizzaiolo = new Pizzaiolo(email, senha);
 
+        PizzaioloDao pizzaioloDao = new PizzaioloDao();
         ClienteDao clienteDao = new ClienteDao();
 
+        boolean isAdmin = pizzaioloDao.verificarCredenciaisAdm(pizzaiolo);
         boolean isValidUser = clienteDao.verificarCredenciais(cliente);
 
-        if (isValidUser) {
-                Cliente clienteLogado = clienteDao.logar(email, senha);
+        Cliente clienteisLogado = (Cliente) req.getSession().getAttribute("loggeduser");
 
-                req.getSession().setAttribute("loggeduser", clienteLogado);
 
-                resp.sendRedirect("landing.html");
-            } else{
-                req.setAttribute("message", "Credenciais invalida");
+        if (isAdmin){
+            Pizzaiolo pizzaioloAdmin = pizzaioloDao.logarAdm(email,senha);
+            req.getSession().invalidate();
+            req.getSession().setAttribute("loggedAdm", pizzaioloAdmin);
 
-                req.getRequestDispatcher("login.html").forward(req,resp);
-            }
+            resp.sendRedirect("/find-all-pizzas");
+
+        } else if (isValidUser) {
+            Cliente clienteLogado = clienteDao.logar(email, senha);
+            req.getSession().invalidate();
+            req.getSession().setAttribute("loggeduser", clienteLogado);
+
+            resp.sendRedirect("/enderecos");
+        } else{
+            req.setAttribute("message", "Credenciais invalida");
+
+            req.getRequestDispatcher("login.html").forward(req,resp);
+        }
+
+//        if (isValidUser) {
+//                Cliente clienteLogado = clienteDao.logar(email, senha);
+//
+//                req.getSession().setAttribute("loggeduser", clienteLogado);
+//
+//                resp.sendRedirect("/enderecos");
+//            } else{
+//                req.setAttribute("message", "Credenciais invalida");
+//
+//                req.getRequestDispatcher("login.html").forward(req,resp);
+//            }
 
 
     }

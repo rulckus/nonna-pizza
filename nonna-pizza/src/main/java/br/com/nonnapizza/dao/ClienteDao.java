@@ -103,5 +103,58 @@ public class ClienteDao{
         }
     }
 
+    public boolean verificarCredenciaisifExists(Cliente cliente){
+        String SQL = "SELECT * FROM CLIENTE WHERE EMAIL = ?";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, cliente.getEmail());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Email localizado com sucesso!");
+
+            while (resultSet.next()) {
+                return true;
+            }
+
+            connection.close();
+            return false;
+        } catch (Exception e){
+            System.out.println("Erro:" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean verificarCredencialDoAdm(Cliente cliente){
+        String SQL = "SELECT * FROM PIZZAIOLO WHERE EMAIL = ?";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, cliente.getEmail());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Email localizado com sucesso!");
+
+            while (resultSet.next()) {
+                return true;
+            }
+
+            connection.close();
+            return false;
+        } catch (Exception e){
+            System.out.println("Erro:" + e.getMessage());
+            return false;
+        }
+    }
+
+
 
 }

@@ -27,7 +27,7 @@ Dessa forma, o sistema busca proporcionar maior organização, agilidade e efici
 - Alterar preços das pizzas
 - Visualizar os pedidos realizados pelos clientes
 - Organizar e acompanhar os pedidos em produção
-- Atualizar os produtos disponíveis no cardápio
+
 
 
 # Ferramentas

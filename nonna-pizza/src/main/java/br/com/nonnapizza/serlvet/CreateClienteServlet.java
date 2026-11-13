@@ -30,8 +30,15 @@ public class CreateClienteServlet extends HttpServlet {
 
         ClienteDao clienteDao = new ClienteDao();
 
-        clienteDao.inserirCliente(cliente);
+        if(!clienteDao.verificarCredenciaisifExists(cliente) && !clienteDao.verificarCredencialDoAdm(cliente)) {
+            clienteDao.inserirCliente(cliente);
 
-        req.getRequestDispatcher("/login.html").forward(req, resp);
+            req.getRequestDispatcher("/login.html").forward(req, resp);
+        }else {
+            req.setAttribute("message", "Email já está sendo utilizado");
+
+            req.getRequestDispatcher("/cadastro.jsp").forward(req, resp);
+        }
+
     }
 }

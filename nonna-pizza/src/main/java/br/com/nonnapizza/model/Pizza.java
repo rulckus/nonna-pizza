@@ -8,6 +8,7 @@ public class Pizza {
     private BigDecimal valor;
     private String descricao;
     private String id;
+    private String disponibilidade;
 
     public Pizza() {}
 
@@ -55,5 +56,13 @@ public class Pizza {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public void setDisponibilidade(String disponibilidade) {
+        this.disponibilidade = disponibilidade;
     }
 }

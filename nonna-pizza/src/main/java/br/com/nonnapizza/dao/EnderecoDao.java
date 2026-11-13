@@ -2,7 +2,6 @@ package br.com.nonnapizza.dao;
 
 import br.com.nonnapizza.model.Cliente;
 import br.com.nonnapizza.model.Endereco;
-import br.com.nonnapizza.model.Produtos;
 import br.com.nonnapizza.serlvet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;

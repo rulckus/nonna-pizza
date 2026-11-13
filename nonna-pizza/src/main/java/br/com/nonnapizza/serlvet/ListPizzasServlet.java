@@ -2,6 +2,7 @@ package br.com.nonnapizza.serlvet;
 
 import br.com.nonnapizza.dao.PizzaDao;
 import br.com.nonnapizza.model.Pizza;
+import br.com.nonnapizza.model.Pizzaiolo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,12 @@ public class ListPizzasServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Pizzaiolo pizzaioloLogado = (Pizzaiolo) req.getSession().getAttribute("loggedAdm");
+
+        if (pizzaioloLogado == null) {
+            req.getRequestDispatcher("/landing.html").forward(req, resp);
+        }
 
         List<Pizza> pizzas = new PizzaDao().listarPizzas();
 

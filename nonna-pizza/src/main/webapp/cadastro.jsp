@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +37,7 @@
             <div>
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="voce@email.com" autocomplete="email" required>
+                <span>${requestScope.message}</span>
             </div>
             <div>
                 <label for="telefone">Telefone</label>

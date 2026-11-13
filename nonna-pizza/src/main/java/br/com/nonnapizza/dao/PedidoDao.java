@@ -11,11 +11,11 @@ import java.util.Date;
 public class PedidoDao {
 
     public Long salvarPedido(Pedido pedido) throws SQLException {
-        String sqlPedido = "INSERT INTO pedido (id_cliente, id_endereco, id_pagamento, status, valor_total, horario) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
-
-        String sqlItem = "INSERT INTO itens_pedido (id_pedido, id_pizza, id_produto, quantidade, preco_unitario) "
+        String sqlPedido = "INSERT INTO pedido (id_cliente, id_endereco, id_pagamento, status, valor_total) "
                 + "VALUES (?, ?, ?, ?, ?)";
+
+        String sqlItem = "INSERT INTO itens_pedido (id_pedido, id_pizza,quantidade, preco_unitario) "
+                + "VALUES (?, ?, ?, ?)";
 
         try(Connection connection = ConnectionPoolConfig.getConnection();
             PreparedStatement psPedido = connection.prepareStatement(sqlPedido,  Statement.RETURN_GENERATED_KEYS);
@@ -36,9 +36,8 @@ public class PedidoDao {
                 for (ItemPedido item : pedido.getItens()) {
                     psItem.setLong(1, idPedido);
                     psItem.setObject(2, item.getIdPizza());
-                    psItem.setObject(3, item.getIdProduto());
-                    psItem.setInt(4, item.getQuantidade());
-                    psItem.setBigDecimal(5, item.getPrecoUnitario());
+                    psItem.setInt(3, item.getQuantidade());
+                    psItem.setBigDecimal(4, item.getPrecoUnitario());
                     psItem.addBatch();
                 }
                 psItem.executeBatch();
@@ -56,13 +55,12 @@ public class PedidoDao {
                 "       p.horario,\n" +
                 "       p.status,\n" +
                 "       p.valor_total,\n" +
-                "       COALESCE(pz.sabor, pr.nome) AS nome_item,\n" +
+                "       COALESCE(pz.sabor) AS nome_item,\n" +
                 "       i.quantidade,\n" +
                 "       i.preco_unitario\n" +
                 "FROM pedido p\n" +
                 "JOIN itens_pedido i       ON i.id_pedido  = p.id_pedido\n" +
                 "LEFT JOIN pizzas pz       ON pz.id_pizza  = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
                 "WHERE p.id_cliente = ?\n" +
                 "ORDER BY p.horario DESC, p.id_pedido;";
 
@@ -103,15 +101,14 @@ public class PedidoDao {
     public List<PedidosAdm> listarPedidosAdm(){
         String SQL = "SELECT p.id_pedido                                                    AS id,\n" +
                 "       c.nome                                                         AS cliente,\n" +
-                "       LISTAGG(i.quantidade || 'x ' || COALESCE(pz.sabor, pr.nome), ', ') AS produtos,\n" +
+                "       LISTAGG(i.quantidade || 'x ' || pz.sabor, ', ') AS pizzas,\n" +
                 "       p.valor_total                                                  AS total,\n" +
                 "       p.horario                                                      AS hora,\n" +
                 "       p.status                                                       AS status\n" +
                 "FROM pedido p\n" +
                 "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
                 "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
-                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
                 "GROUP BY p.id_pedido, c.nome, p.valor_total, p.horario, p.status\n" +
                 "ORDER BY p.horario DESC;";
 
@@ -129,8 +126,8 @@ public class PedidoDao {
 
                 pedido.setId(resultSet.getString("ID"));
                 pedido.setCliente(resultSet.getString("CLIENTE"));
+                pedido.setPizzas(resultSet.getString("pizzas"));
                 pedido.setHora((resultSet.getTimestamp("HORA").toLocalDateTime()));
-                pedido.setProdutos(resultSet.getString("PRODUTOS"));
                 pedido.setTotal(resultSet.getBigDecimal("TOTAL"));
                 pedido.setStatus(resultSet.getString("STATUS"));
 
@@ -251,12 +248,11 @@ public class PedidoDao {
                 "       p.status,\n" +
                 "       c.nome                          AS cliente,\n" +
                 "       i.quantidade,\n" +
-                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "       COALESCE(pz.sabor)     AS nome_item\n" +
                 "FROM pedido p\n" +
                 "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
                 "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
-                "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
+                "JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
                 "WHERE p.status = 'RECEBIDO'\n" +
                 "ORDER BY p.horario ASC, p.id_pedido;";
 
@@ -300,12 +296,11 @@ public class PedidoDao {
                 "       p.status,\n" +
                 "       c.nome                          AS cliente,\n" +
                 "       i.quantidade,\n" +
-                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "       COALESCE(pz.sabor)     AS nome_item\n" +
                 "FROM pedido p\n" +
                 "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
                 "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
                 "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
                 "WHERE p.status = 'PREPARANDO'\n" +
                 "ORDER BY p.horario ASC, p.id_pedido;";
 
@@ -351,12 +346,11 @@ public class PedidoDao {
                 "       p.status,\n" +
                 "       c.nome                          AS cliente,\n" +
                 "       i.quantidade,\n" +
-                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "       COALESCE(pz.sabor)     AS nome_item\n" +
                 "FROM pedido p\n" +
                 "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
                 "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
                 "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
                 "WHERE p.status = 'ASSANDO'\n" +
                 "ORDER BY p.horario ASC, p.id_pedido;";
 
@@ -401,12 +395,11 @@ public class PedidoDao {
                 "       p.status,\n" +
                 "       c.nome                          AS cliente,\n" +
                 "       i.quantidade,\n" +
-                "       COALESCE(pz.sabor, pr.nome)     AS nome_item\n" +
+                "       COALESCE(pz.sabor)     AS nome_item\n" +
                 "FROM pedido p\n" +
                 "JOIN cliente c            ON c.id_cliente  = p.id_cliente\n" +
                 "JOIN itens_pedido i       ON i.id_pedido   = p.id_pedido\n" +
                 "LEFT JOIN pizzas pz       ON pz.id_pizza   = i.id_pizza\n" +
-                "LEFT JOIN produtos pr     ON pr.id_produto = i.id_produto\n" +
                 "WHERE p.status = 'PRONTO'\n" +
                 "ORDER BY p.horario ASC, p.id_pedido;";
 

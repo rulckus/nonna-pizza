@@ -37,8 +37,7 @@ public class CreatePedidoServlet extends HttpServlet {
 
         for (CarrinhoItem ci : carrinho.getItens()) {
             ItemPedido item = new ItemPedido();
-            if ("pizza".equals(ci.getTipo())) item.setIdPizza(ci.getId());
-            else item.setIdProduto(ci.getId());
+            item.setIdPizza(ci.getId());
             item.setQuantidade(ci.getQuantidade());
             item.setPrecoUnitario(ci.getPreco());     // já veio do banco
             pedido.getItens().add(item);
@@ -48,7 +47,7 @@ public class CreatePedidoServlet extends HttpServlet {
         try {
             pedidoDao.salvarPedido(pedido);
             carrinho.limpar();                        // só limpa depois de salvar
-            resp.sendRedirect("historico.jsp");
+            resp.sendRedirect("/historico");
         } catch (SQLException e) {
             e.printStackTrace();
             resp.sendError(500, "Erro ao salvar pedido");

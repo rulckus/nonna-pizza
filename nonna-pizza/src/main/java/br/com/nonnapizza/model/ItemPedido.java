@@ -6,8 +6,7 @@ public class ItemPedido {
 
     private Long id;
     private Long idPedido;
-    private Long idPizza;      // null se for produto
-    private Long idProduto;    // null se for pizza
+    private Long idPizza;
     private int quantidade;
     private BigDecimal precoUnitario;
 
@@ -33,14 +32,6 @@ public class ItemPedido {
 
     public void setIdPizza(Long idPizza) {
         this.idPizza = idPizza;
-    }
-
-    public Long getIdProduto() {
-        return idProduto;
-    }
-
-    public void setIdProduto(Long idProduto) {
-        this.idProduto = idProduto;
     }
 
     public int getQuantidade() {
