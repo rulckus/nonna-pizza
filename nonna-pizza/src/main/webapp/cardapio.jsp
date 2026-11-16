@@ -17,30 +17,30 @@
 
 <header class="cabecalho">
     <div class="container">
-        <a href="landing.html" class="marca">
+        <a href="landing.jsp" class="marca">
             <span class="marca-selo" aria-hidden="true">N</span>
             <span>Nonna<small>PIZZA</small></span>
         </a>
         <nav class="menu-topo" aria-label="Principal">
-            <a href="/cardapio" aria-current="page">Cardápio</a>
-            <a href="/historico">Meus Pedidos</a>
-            <a href="/enderecos">Minha Conta</a>
-            <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
-                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
-            </a>
+            <c:choose>
+              <c:when test="${not empty sessionScope.loggeduser}">
+                 <a href="/cardapio" aria-current="page">Cardápio</a>
+                 <a href="/historico">Meus Pedidos</a>
+                 <a href="/enderecos">Minha Conta</a>
+                 <a href="/carrinho" class="carrinho-link" aria-label="Carrinho, ${empty carrinho ? 0 : carrinho.quantidadeTotal} itens">
+                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <span class="carrinho-qtd">${empty carrinho ? 0 : carrinho.quantidadeTotal}</span>
+                 </a>
+              </c:when>
+                <c:otherwise>
+                  <a href="/landing">Home</a>
+                  <a href="login.html" class="btn btn-primario btn-pilula">Entrar</a>
+                </c:otherwise>
+            </c:choose>
         </nav>
     </div>
 </header>
 
-<div class="barra-busca">
-    <div class="container">
-        <label class="busca">
-            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="search" placeholder="Buscar sabor..." aria-label="Buscar sabor" data-filtro=".pizza-card">
-        </label>
-    </div>
-</div>
 
 <main>
     <div class="container">
@@ -49,19 +49,24 @@
         <div class="grade-pizzas" id="grade">
             <c:forEach var="pizza" items="${pizzasCardapio}">
                 <article class="pizza-card">
-                    <%-- Quando o Java tiver getFoto() em Pizza, tire o comentário:
-                    <img src="${pizza.foto}" alt="Pizza <c:out value='${pizza.sabor}'/>" loading="lazy">
-                    --%>
+                    <img src="/img/${pizza.image}" loading="lazy">
                     <h3><c:out value="${pizza.sabor}"/></h3>
                     <p><c:out value="${pizza.descricao}"/></p>
                     <span class="valor"><fmt:formatNumber value="${pizza.valor}" type="currency"/></span>
 
-                    <form action="/carrinho" method="post">
+                  <c:choose>
+                  <c:when test="${not empty sessionScope.loggeduser}">
+                     <form action="/carrinho" method="post">
                         <input type="hidden" name="acao" value="adicionar">
                         <input type="hidden" name="tipo" value="pizza">
                         <input type="hidden" name="id" value="${pizza.id}">
                         <button type="submit" class="btn btn-primario">+ Pedir</button>
-                    </form>
+                     </form>
+                  </c:when>
+                    <c:otherwise>
+
+                    </c:otherwise>
+                </c:choose>
                 </article>
             </c:forEach>
             <c:if test="${empty pizzasCardapio}">

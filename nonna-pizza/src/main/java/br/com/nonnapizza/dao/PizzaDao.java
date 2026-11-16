@@ -14,7 +14,7 @@ import java.util.List;
 public class PizzaDao {
 
     public void inserirPizza(Pizza pizza){
-        String SQL = "INSERT INTO PIZZAS(SABOR, TIPO, VALOR, DESCRICAO, DISPONIBILIDADE) VALUES (?, ?, ?, ?, ?);";
+        String SQL = "INSERT INTO PIZZAS(SABOR, TIPO, VALOR, DESCRICAO, DISPONIBILIDADE, FOTO) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
             Connection connection = ConnectionPoolConfig.getConnection();
@@ -28,6 +28,7 @@ public class PizzaDao {
             preparedStatement.setBigDecimal(3, pizza.getValor());
             preparedStatement.setString(4, pizza.getDescricao());
             preparedStatement.setInt(5, 1);
+            preparedStatement.setString(6, pizza.getImage());
 
 
             preparedStatement.execute();
@@ -42,7 +43,7 @@ public class PizzaDao {
     }
 
     public List<Pizza> listarPizzas(){
-        String SQL = "SELECT * FROM PIZZAS";
+        String SQL = "SELECT * FROM PIZZAS WHERE EXCLUIDA = FALSE";
 
         try {
             Connection connection = ConnectionPoolConfig.getConnection();
@@ -62,6 +63,8 @@ public class PizzaDao {
                 pizza.setValor(resultSet.getBigDecimal("valor"));
                 pizza.setDescricao(resultSet.getString("descricao"));
                 pizza.setTipo(resultSet.getString("tipo"));
+                pizza.setImage(resultSet.getString("foto"));
+                pizza.setDisponibilidade(resultSet.getBoolean("disponibilidade"));
 
                 pizzas.add(pizza);
             }
@@ -79,7 +82,7 @@ public class PizzaDao {
 
     public void deletePizzaById(String pizzaId) {
 
-        String SQL = "DELETE PIZZAS WHERE ID_PIZZA = ?";
+        String SQL = "UPDATE PIZZAS SET EXCLUIDA = TRUE, DISPONIBILIDADE = FALSE WHERE ID_PIZZA = ?";
 
         try {
 
@@ -97,7 +100,7 @@ public class PizzaDao {
 
         } catch (Exception e) {
 
-            System.out.println("fail in database connection");
+            System.out.println("Erro ao excluir pizza: " + e.getMessage());
 
         }
 
@@ -123,6 +126,7 @@ public class PizzaDao {
                 pizza.setSabor(resultSet.getString("sabor"));
                 pizza.setValor(resultSet.getBigDecimal("valor"));
                 pizza.setDescricao(resultSet.getString("descricao"));
+                pizza.setImage(resultSet.getString("foto"));
 
                 pizzas.add(pizza);
             }
@@ -139,7 +143,7 @@ public class PizzaDao {
     }
 
     public void atualizarPizza(Pizza pizza){
-        String SQL = "UPDATE PIZZAS SET SABOR = ?, TIPO = ?, DESCRICAO= ?, VALOR= ? WHERE ID_PIZZA = ?";
+        String SQL = "UPDATE PIZZAS SET SABOR = ?, TIPO = ?, DESCRICAO= ?, VALOR= ?, FOTO = COALESCE(?, FOTO) WHERE ID_PIZZA = ?";
 
         try {
 
@@ -151,8 +155,9 @@ public class PizzaDao {
             preparedStatement.setString(2, pizza.getTipo());
             preparedStatement.setString(3, pizza.getDescricao());
             preparedStatement.setBigDecimal(4, pizza.getValor());
+            preparedStatement.setString(5, pizza.getImage());
 
-            preparedStatement.setString(5, pizza.getId());
+            preparedStatement.setString(6, pizza.getId());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao atualizar Pizza");
@@ -202,7 +207,7 @@ public class PizzaDao {
         return null;
     }
 
-    public void atualizarPizzaDisponibilidade(Pizza pizza, int disponibilidade){
+    public void atualizarPizzaDisponibilidade(String id, boolean disponibilidade){
         String SQL = "UPDATE PIZZAS SET DISPONIBILIDADE = ? WHERE ID_PIZZA = ?";
 
         try {
@@ -211,8 +216,8 @@ public class PizzaDao {
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setInt(1, disponibilidade);
-            preparedStatement.setString(2, pizza.getId());
+            preparedStatement.setBoolean(1, disponibilidade);
+            preparedStatement.setString(2, id);
 
             preparedStatement.execute();
 
@@ -225,5 +230,41 @@ public class PizzaDao {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
 
         }
+    }
+
+    public List<Pizza> listarPizzasLading(){
+        String SQL = "SELECT * FROM PIZZAS WHERE DISPONIBILIDADE = TRUE LIMIT 3";
+
+        try {
+            Connection connection = ConnectionPoolConfig.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Pizza> pizzas = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                Pizza pizza = new Pizza();
+
+                pizza.setId(resultSet.getString("id_pizza"));
+                pizza.setSabor(resultSet.getString("sabor"));
+                pizza.setValor(resultSet.getBigDecimal("valor"));
+                pizza.setDescricao(resultSet.getString("descricao"));
+                pizza.setImage(resultSet.getString("foto"));
+
+                pizzas.add(pizza);
+            }
+
+            System.out.println("Sucesso ao consultar Pizzas!");
+            connection.close();
+
+            return pizzas;
+        }catch (Exception e){
+            System.out.println("Erro ao listar pizzas: " + e.getMessage());
+        }
+
+        return Collections.emptyList();
     }
 }

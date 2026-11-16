@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/producao")
@@ -20,8 +23,11 @@ public class ListProducao extends HttpServlet {
         Pizzaiolo pizzaioloLogado = (Pizzaiolo) req.getSession().getAttribute("loggedAdm");
 
         if (pizzaioloLogado == null) {
-            req.getRequestDispatcher("/landing.html").forward(req, resp);
+            req.getRequestDispatcher("/landing.jsp").forward(req, resp);
         }
+        LocalTime hora = LocalTime.now();
+        req.setAttribute("hora", hora.format(DateTimeFormatter.ofPattern("HH:mm")));
+
         List<PedidoCard> pedidosRecebidos = new PedidoDao().listarPedidosProducaoRecebidos();
         List<PedidoCard> pedidosPreparando = new PedidoDao().listarPedidosProducaoPreparando();
         List<PedidoCard> pedidosAssando = new PedidoDao().listarPedidosProducaoAssando();

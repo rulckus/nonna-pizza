@@ -72,11 +72,18 @@
                             <td><c:out value="${pizza.sabor}"/></td>
                             <td><c:out value="${pizza.descricao}"/></td>
                             <td>${pizza.valor}</td>
+
                             <td>
+                                <form action="atualizar-disponibilidade" method="post">
                                 <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span></span>
-                                </label>
+                                    <input type="hidden" name="id" value="${pizza.id}">
+
+                                    <input type="checkbox" name="disponivel" value="true"
+                                           ${pizza.disponibilidade ? 'checked' : ''}
+                                           onchange="this.form.submit()">
+                                           <span></span>
+                                    </label>
+                                </form>
                             </td>
                             <td>
                                 <form action="/delete-pizza" method="post">
@@ -100,7 +107,7 @@
                     <span class="tag">Cadastro</span>
                 </div>
 
-                <form action="/create-pizza" method="post">
+                <form action="/create-pizza" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" id="idPizza" value="${param.id}">
                     <label for="sabor">Nome</label>
                     <input type="text" name="sabor" id="sabor" placeholder="Ex: Quatro Queijos" value="<c:out value="${param.sabor}"/>" required>
@@ -113,6 +120,9 @@
 
                     <label for="valor">Preço (R$)</label>
                     <input type="number" name="valor" id="valor" step="0.01" min="0.01" placeholder="Ex: 49.90" value="${param.valor}" required>
+
+                    <label> Foto </label>
+                    <input type="file" name="image" id="image">
 
 
                     <button type="submit" class="btn btn-primario">Salvar sabor</button>

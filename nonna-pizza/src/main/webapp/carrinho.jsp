@@ -25,7 +25,7 @@
 
 <header class="cabecalho">
     <div class="container">
-        <a href="landing.html" class="marca">
+        <a href="landing.jsp" class="marca">
             <span class="marca-selo" aria-hidden="true">N</span>
             <span>Nonna<small>PIZZA</small></span>
         </a>
@@ -88,7 +88,7 @@
                 <dl>
                     <div class="linha-resumo linha-total">
                         <dt>Total</dt>
-                        <dd id="total"></dd>
+                        <dd id="total"><fmt:formatNumber value="${empty carrinho ? 0 : carrinho.total}" type="currency"/></dd>
                     </div>
                 </dl>
                 <a href="/checkout" id="continuar" class="btn btn-primario btn-grande">Continuar para entrega</a>
@@ -112,7 +112,5 @@
     </div>
 </footer>
 
-<script src="js/app.js"></script>
-<script src="js/carrinho.js"></script>
 </body>
 </html>

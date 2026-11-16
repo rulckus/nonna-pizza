@@ -8,7 +8,8 @@ public class Pizza {
     private BigDecimal valor;
     private String descricao;
     private String id;
-    private String disponibilidade;
+    private boolean disponibilidade;
+    private String image;
 
     public Pizza() {}
 
@@ -17,6 +18,15 @@ public class Pizza {
         this.id = id;
     }
 
+    public Pizza(String sabor, String tipo, BigDecimal valor, String descricao, String id, boolean disponibilidade, String image) {
+        this.sabor = sabor;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.id = id;
+        this.disponibilidade = disponibilidade;
+        this.image = image;
+    }
 
     public String getSabor() {
         return sabor;
@@ -58,11 +68,19 @@ public class Pizza {
         this.id = id;
     }
 
-    public String getDisponibilidade() {
+    public boolean getDisponibilidade() {
         return disponibilidade;
     }
 
-    public void setDisponibilidade(String disponibilidade) {
+    public void setDisponibilidade(boolean disponibilidade) {
         this.disponibilidade = disponibilidade;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

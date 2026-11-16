@@ -4,6 +4,7 @@ import br.com.nonnapizza.dao.PedidoDao;
 import br.com.nonnapizza.dao.PizzaDao;
 import br.com.nonnapizza.model.Cliente;
 import br.com.nonnapizza.model.Pedido;
+import br.com.nonnapizza.model.PedidoHistorico;
 import br.com.nonnapizza.model.Pizza;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class ListHistoricoServlet extends HttpServlet {
         if (clienteLogado == null) {
             resp.sendRedirect("/login.html");
         }else {
-            List<Pedido> pedidos = new PedidoDao().listarPedidos(clienteLogado.getId());
+            List<PedidoHistorico> pedidos = new PedidoDao().listarPedidos(clienteLogado.getId());
 
             req.setAttribute("pedidos", pedidos);
 

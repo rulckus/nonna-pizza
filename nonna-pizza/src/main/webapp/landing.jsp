@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +18,23 @@
 
 <header class="cabecalho">
     <div class="container">
-        <a href="landing.html" class="marca">
+        <a href="landing.jsp" class="marca">
             <span class="marca-selo" aria-hidden="true">N</span>
             <span>Nonna<small>PIZZA</small></span>
         </a>
         <nav class="menu-topo" aria-label="Principal">
-            <a href="landing.html" aria-current="page">Home</a>
-            <a href="/cardapio">Cardápio</a>
-            <a href="login.html" class="btn btn-primario btn-pilula">Entrar</a>
+            <c:choose>
+                <c:when test="${not empty sessionScope.loggeduser}">
+                    <a href="/cardapio">Cardápio</a>
+                    <a href="/historico">Meus pedidos</a>
+                    <a href="/enderecos">Minha conta</a>
+                    <a href="login.html" class="btn btn-primario btn-pilula">Entrar</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/cardapio">Cardápio</a>
+                    <a href="login.html" class="btn btn-primario btn-pilula">Entrar</a>
+                </c:otherwise>
+            </c:choose>
         </nav>
     </div>
 </header>
@@ -81,33 +93,28 @@
         <div class="container">
             <h2 class="titulo-landing">Pizzas mais populares</h2>
             <div class="populares">
-                <article class="destaque">
-                    <img src="imagem%20das%20pizzas/Marguerita.png" alt="Pizza Margherita" loading="lazy">
-                    <h3>Margherita</h3>
-                    <p>Clássica com molho de tomate, mussarela e manjericão fresco</p>
-                    <div class="destaque-rodape">
-                        <strong>R$ 42,90</strong>
-                        <a href="/carrinho" class="btn btn-primario">+ Pedir</a>
-                    </div>
-                </article>
-                <article class="destaque">
-                    <img src="imagem%20das%20pizzas/Quatro-queijos.png" alt="Pizza Quatro Queijos" loading="lazy">
-                    <h3>Quatro Queijos</h3>
-                    <p>Mussarela, parmesão, catupiry e gorgonzola com orégano</p>
-                    <div class="destaque-rodape">
-                        <strong>R$ 49,90</strong>
-                        <a href="/carrinho" class="btn btn-primario">+ Pedir</a>
-                    </div>
-                </article>
-                <article class="destaque">
-                    <img src="imagem%20das%20pizzas/Marguerita.png" alt="Pizza Rúcula e Parma" loading="lazy">
-                    <h3>Rúcula e Parma</h3>
-                    <p>Pesto, presunto parma, rúcula fresca e lascas de parmesão</p>
-                    <div class="destaque-rodape">
-                        <strong>R$ 54,90</strong>
-                        <a href="/carrinho" class="btn btn-primario">+ Pedir</a>
-                    </div>
-                </article>
+                <c:forEach var="pizza" items="${pizzasPopulares}">
+                    <article class="pizza-card">
+                            <img src="${pageContext.request.contextPath}/img/${pizza.image}" loading="lazy">
+                             <h3><c:out value="${pizza.sabor}"/></h3>
+                              <p><c:out value="${pizza.descricao}"/></p>
+                             <span class="valor"><fmt:formatNumber value="${pizza.valor}" type="currency"/></span>
+
+                  <c:choose>
+                  <c:when test="${not empty sessionScope.loggeduser}">
+                     <form action="/carrinho" method="post">
+                        <input type="hidden" name="acao" value="adicionar">
+                        <input type="hidden" name="tipo" value="pizza">
+                        <input type="hidden" name="id" value="${pizza.id}">
+                        <button type="submit" class="btn btn-primario">+ Pedir</button>
+                     </form>
+                  </c:when>
+                    <c:otherwise>
+
+                    </c:otherwise>
+                     </c:choose>
+                    </article>
+                </c:forEach>
             </div>
             <a href="/cardapio" class="ver-cardapio">Ver cardápio completo →</a>
         </div>

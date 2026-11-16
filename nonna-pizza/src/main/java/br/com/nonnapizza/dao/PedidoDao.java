@@ -50,52 +50,49 @@ public class PedidoDao {
             }
     }
 
-    public List<Pedido> listarPedidos(String id){
-        String SQL = "SELECT p.id_pedido,\n" +
-                "       p.horario,\n" +
-                "       p.status,\n" +
-                "       p.valor_total,\n" +
-                "       COALESCE(pz.sabor) AS nome_item,\n" +
-                "       i.quantidade,\n" +
-                "       i.preco_unitario\n" +
-                "FROM pedido p\n" +
-                "JOIN itens_pedido i       ON i.id_pedido  = p.id_pedido\n" +
-                "LEFT JOIN pizzas pz       ON pz.id_pizza  = i.id_pizza\n" +
-                "WHERE p.id_cliente = ?\n" +
-                "ORDER BY p.horario DESC, p.id_pedido;";
+    public List<PedidoHistorico> listarPedidos(String idCliente){
+        String SQL = "SELECT p.id_pedido, p.horario, p.status, p.valor_total, i.quantidade, pz.sabor "
+                + "FROM pedido p "
+                + "JOIN itens_pedido i ON i.id_pedido = p.id_pedido "
+                + "JOIN pizzas pz      ON pz.id_pizza = i.id_pizza "
+                + "WHERE p.id_cliente = ? "
+                + "ORDER BY p.horario DESC, p.id_pedido DESC, i.id_itenspedido";
+
+        Map<String, PedidoHistorico> pedidos = new LinkedHashMap<>();
 
         try {
             Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
-            preparedStatement.setString(1, id);
+            preparedStatement.setString(1, idCliente);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            List<Pedido> pedidos = new ArrayList<>();
-
             while (resultSet.next()) {
-                Pedido pedido = new Pedido();
+                String idP = resultSet.getString("id_pedido");
 
-                pedido.setId(Long.valueOf(resultSet.getString("ID_Pedido")));
-                pedido.setValor(resultSet.getBigDecimal("VALOR_TOTAL"));
-                pedido.setData((resultSet.getTimestamp("Horario").toLocalDateTime()));
-                pedido.setStatus(resultSet.getString("STATUS"));
+                PedidoHistorico p = pedidos.get(idP);
 
+                if (p == null) {
+                    p = new PedidoHistorico();
+                    p.setId(idP);
+                    p.setHora(resultSet.getObject("horario", LocalDateTime.class));
+                    p.setStatus(resultSet.getString("status"));
+                    p.setTotal(resultSet.getBigDecimal("valor_total"));
+                    pedidos.put(idP, p);
+                }
+                p.getItens().add(resultSet.getInt("quantidade") + "× " + resultSet.getString("sabor"));
 
-                pedidos.add(pedido);
             }
 
             System.out.println("Sucesso ao consultar Histórico de pedidos!");
             connection.close();
-
-            return pedidos;
         }catch (Exception e){
             System.out.println("Erro ao listar histórico: " + e.getMessage());
         }
 
-        return Collections.emptyList();
+        return new ArrayList<>(pedidos.values());
     }
 
     public List<PedidosAdm> listarPedidosAdm(){

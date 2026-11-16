@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             req.getSession().invalidate();
             req.getSession().setAttribute("loggeduser", clienteLogado);
 
-            resp.sendRedirect("/enderecos");
+            resp.sendRedirect("/landing");
         } else{
             req.setAttribute("message", "Credenciais invalida");
 

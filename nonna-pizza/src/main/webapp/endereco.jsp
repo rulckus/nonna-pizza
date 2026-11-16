@@ -16,7 +16,7 @@
 
 <header class="cabecalho">
     <div class="container">
-        <a href="landing.html" class="marca">
+        <a href="landing.jsp" class="marca">
             <span class="marca-selo" aria-hidden="true">N</span>
             <span>Nonna<small>PIZZA</small></span>
         </a>

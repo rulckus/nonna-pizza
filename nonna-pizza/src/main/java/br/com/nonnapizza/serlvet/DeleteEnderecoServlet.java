@@ -21,6 +21,6 @@ public class DeleteEnderecoServlet extends HttpServlet {
 
         endereco.deleteEnderecoById(id);
 
-        resp.sendRedirect("/find-all-address");
+        resp.sendRedirect("/enderecos");
     }
 }

@@ -22,7 +22,7 @@ public class ListPizzasServlet extends HttpServlet {
         Pizzaiolo pizzaioloLogado = (Pizzaiolo) req.getSession().getAttribute("loggedAdm");
 
         if (pizzaioloLogado == null) {
-            req.getRequestDispatcher("/landing.html").forward(req, resp);
+            req.getRequestDispatcher("/landing.jsp").forward(req, resp);
         }
 
         List<Pizza> pizzas = new PizzaDao().listarPizzas();

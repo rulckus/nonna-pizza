@@ -44,7 +44,7 @@
             <h2>Produção — Cozinha</h2>
             <p class="atualizado">
                 <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                Atualizado às <span id="hora">--:--</span>
+                Atualizado às <span id="hora">${hora}</span>
             </p>
         </header>
 

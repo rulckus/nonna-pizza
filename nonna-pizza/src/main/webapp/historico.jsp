@@ -18,7 +18,7 @@
 
 <header class="cabecalho">
     <div class="container">
-        <a href="landing.html" class="marca">
+        <a href="landing.jsp" class="marca">
             <span class="marca-selo" aria-hidden="true">N</span>
             <span>Nonna<small>PIZZA</small></span>
         </a>
@@ -38,17 +38,24 @@
     <div class="container">
         <h1 class="titulo-pagina titulo-italico">Histórico de Pedidos</h1>
 
-        <ul class="lista-pedidos" id="pedidos">
+        <ul class="lista-pedidos">   <%-- use a classe da lista que você já tem --%>
             <c:forEach var="pedido" items="${pedidos}">
-                <%-- data vem como 2026-10-29T18:30:12: separa dia, mês, ano e hora --%>
-                <c:set var="d" value="${pedido.data}"/>
                 <li class="pedido">
                     <div class="pedido-numero">
                         #${pedido.id}
-                        <time>${fn:substring(d,8,10)}/${fn:substring(d,5,7)}/${fn:substring(d,0,4)} ${fn:substring(d,11,16)}</time>
+                        <time>${pedido.horaFormatada}</time>
                     </div>
-                    <span></span>
-                    <span class="pedido-total"><fmt:formatNumber value="${pedido.valor}" type="currency"/></span>
+
+                    <div class="pedido-itens">
+                        <c:forEach var="item" items="${pedido.itens}">
+                            <p><c:out value="${item}"/></p>
+                        </c:forEach>
+                    </div>
+
+                    <span class="pedido-total">
+                        <fmt:formatNumber value="${pedido.total}" type="currency"/>
+                    </span>
+
                     <span class="selo selo-${fn:toLowerCase(pedido.status)}">
                         <c:choose>
                             <c:when test="${pedido.status == 'RECEBIDO'}">Recebido</c:when>
@@ -61,6 +68,7 @@
                     </span>
                 </li>
             </c:forEach>
+
             <c:if test="${empty pedidos}">
                 <li class="estado-vazio">Você ainda não fez nenhum pedido.</li>
             </c:if>
